@@ -1,5 +1,0 @@
-D:\Repo\GoT_FashionShop\FashionShop\OCS.DataAccess\bin\Debug\OCS.DataAccess.dll
-D:\Repo\GoT_FashionShop\FashionShop\OCS.DataAccess\bin\Debug\OCS.DataAccess.pdb
-D:\Repo\GoT_FashionShop\FashionShop\OCS.DataAccess\obj\Debug\OCS.DataAccess.csprojResolveAssemblyReference.cache
-D:\Repo\GoT_FashionShop\FashionShop\OCS.DataAccess\obj\Debug\OCS.DataAccess.dll
-D:\Repo\GoT_FashionShop\FashionShop\OCS.DataAccess\obj\Debug\OCS.DataAccess.pdb
