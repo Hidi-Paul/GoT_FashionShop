@@ -1,9 +1,0 @@
-D:\Repo\GoT_FashionShop\FashionShop\Business Layer\bin\Debug\netstandard1.4\OCS.BusinessLayer.deps.json
-D:\Repo\GoT_FashionShop\FashionShop\Business Layer\bin\Debug\netstandard1.4\OCS.BusinessLayer.dll
-D:\Repo\GoT_FashionShop\FashionShop\Business Layer\bin\Debug\netstandard1.4\OCS.BusinessLayer.pdb
-D:\Repo\GoT_FashionShop\FashionShop\Business Layer\obj\Debug\netstandard1.4\OCS.BusinessLayer.csprojResolveAssemblyReference.cache
-D:\Repo\GoT_FashionShop\FashionShop\Business Layer\obj\Debug\netstandard1.4\OCS.BusinessLayer.AssemblyInfo.cs
-D:\Repo\GoT_FashionShop\FashionShop\Business Layer\obj\Debug\netstandard1.4\OCS.BusinessLayer.dll
-D:\Repo\GoT_FashionShop\FashionShop\Business Layer\obj\Debug\netstandard1.4\OCS.BusinessLayer.pdb
-D:\Repo\GoT_FashionShop\FashionShop\Business Layer\bin\Debug\netstandard1.4\OCS.DataAccessLayer.dll
-D:\Repo\GoT_FashionShop\FashionShop\Business Layer\bin\Debug\netstandard1.4\OCS.DataAccessLayer.pdb
