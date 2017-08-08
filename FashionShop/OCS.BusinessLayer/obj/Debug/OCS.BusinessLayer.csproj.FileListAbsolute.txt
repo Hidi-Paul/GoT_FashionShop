@@ -1,0 +1,7 @@
+D:\Repo\GoT_FashionShop\FashionShop\OCS.BusinessLayer\bin\Debug\OCS.BusinessLayer.dll
+D:\Repo\GoT_FashionShop\FashionShop\OCS.BusinessLayer\bin\Debug\OCS.BusinessLayer.pdb
+D:\Repo\GoT_FashionShop\FashionShop\OCS.BusinessLayer\bin\Debug\OCS.DataAccess.dll
+D:\Repo\GoT_FashionShop\FashionShop\OCS.BusinessLayer\bin\Debug\OCS.DataAccess.pdb
+D:\Repo\GoT_FashionShop\FashionShop\OCS.BusinessLayer\obj\Debug\OCS.BusinessLayer.csprojResolveAssemblyReference.cache
+D:\Repo\GoT_FashionShop\FashionShop\OCS.BusinessLayer\obj\Debug\OCS.BusinessLayer.dll
+D:\Repo\GoT_FashionShop\FashionShop\OCS.BusinessLayer\obj\Debug\OCS.BusinessLayer.pdb
