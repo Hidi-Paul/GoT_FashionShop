@@ -9,14 +9,19 @@ namespace OCS.DataAccess
     [Table("Category")]
     public partial class Category
     {
-        public Guid CategoryID { get; set; }
+        public Category()
+        {
+            Products = new HashSet<Product>();
+        }
 
-        public Guid? ProductID { get; set; }
+        public Guid CategoryID { get; set; }
 
         [Required]
         [StringLength(50)]
         public string CategoryName { get; set; }
 
-        public virtual Product Product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product> Products { get; set; }
+
     }
 }
