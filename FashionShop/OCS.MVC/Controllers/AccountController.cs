@@ -507,5 +507,10 @@ namespace OCS.MVC.Controllers
 
             return callbackUrl;
         }
+
+        public ActionResult Denied()
+        {
+            return View();
+        }
     }
 }
