@@ -58,12 +58,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OCS.MVC\OCS.MVC.csproj">
-      <Project>{4BC7B51F-371D-4408-824F-D3D8E8EA3B93}</Project>
-      <Name>OCS.MVC</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
