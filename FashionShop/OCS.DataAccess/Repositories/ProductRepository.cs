@@ -5,7 +5,7 @@ using System.Linq;
 namespace OCS.DataAccess.Repositories
 {
 
-    class ProductRepository : IProductRepository
+    public class ProductRepository : IProductRepository
     {
         public IEnumerable<Product> GetAllProducts()
         {
@@ -27,7 +27,7 @@ namespace OCS.DataAccess.Repositories
             }
         }
 
-        public void AddProduct(Product product)
+        public void SaveProduct(Product product)
         {
             using (DataModel db = new DataModel())
             {

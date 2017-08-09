@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using OCS.BusinessLayer.Models;
+using OCS.DataAccess;
 
 namespace OCS.BusinessLayer.Mapping
 {
@@ -13,10 +15,8 @@ namespace OCS.BusinessLayer.Mapping
         {
             Mapper.Initialize(cfg =>
             {
-                //cfg.CreateMap<Product,ProductModel>(); 
-                //cfg.CreateMap<ProductModel,Product>();
-
-
+                cfg.CreateMap<Product,ProductModel>(); 
+                cfg.CreateMap<ProductModel,Product>();
             });
         }
     }

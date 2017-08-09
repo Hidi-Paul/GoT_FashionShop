@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace OCS.DataAccess.Repositories
 {
-    internal interface IProductRepository
+    public interface IProductRepository
     {
         IEnumerable<Product> GetAllProducts();
 
         Product GetProductById(Guid id);
 
-        void AddProduct(Product product);
+        void SaveProduct(Product product);
     }
 }
