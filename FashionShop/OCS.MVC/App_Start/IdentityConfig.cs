@@ -42,7 +42,7 @@ namespace OCS.MVC
 
             {
 
-                From = new EmailAddress("Tier@Outlook.com", "Tier One"),
+                From = new EmailAddress("accountHelp@fashionshop.ro", "Account Help - FashionShop"),
 
                 Subject = iMessage.Subject,
 
