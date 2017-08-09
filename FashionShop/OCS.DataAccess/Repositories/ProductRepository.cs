@@ -26,5 +26,14 @@ namespace OCS.DataAccess.Repositories
                 return myProduct;
             }
         }
+
+        public void AddProduct(Product product)
+        {
+            using (DataModel db = new DataModel())
+            {
+                db.Products.Add(product);
+                db.SaveChanges();
+            }
+        }
     }
 }
