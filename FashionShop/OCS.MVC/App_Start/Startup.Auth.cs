@@ -58,11 +58,11 @@ namespace OCS.MVC
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "949780644661-q74gm68qp76llcde6hm366g90uvllloj.apps.googleusercontent.com",
+                ClientSecret = "zp3mfi6WQmoyO69QOlAlLmXi"
+            });
         }
     }
 }
