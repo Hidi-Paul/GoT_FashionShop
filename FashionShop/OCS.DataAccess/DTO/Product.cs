@@ -4,7 +4,6 @@ namespace OCS.DataAccess
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Product")]
     public partial class Product
@@ -12,7 +11,6 @@ namespace OCS.DataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            Categories = new HashSet<Category>();
         }
 
         public Guid ProductID { get; set; }
@@ -28,10 +26,11 @@ namespace OCS.DataAccess
 
         public Guid? BrandID { get; set; }
 
+        public Guid? CategoryID { get; set; }
+
         public virtual Brand Brand { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Category> Categories { get; set; }
+        public virtual Category Category { get; set; }
 
         public virtual Color Color { get; set; }
 

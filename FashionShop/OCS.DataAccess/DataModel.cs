@@ -8,7 +8,7 @@ namespace OCS.DataAccess
     public partial class DataModel : DbContext
     {
         public DataModel()
-            : base("name=DataModel")
+            : base("DataModel")
         {
         }
 
