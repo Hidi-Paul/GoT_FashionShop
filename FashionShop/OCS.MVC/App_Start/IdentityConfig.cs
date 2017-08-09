@@ -15,6 +15,13 @@ using SendGrid;
 using System.Net;
 using System.Configuration;
 using System.Diagnostics;
+using SendGrid.Helpers.Mail;
+
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+using System.Net.Mail;
+
 
 namespace OCS.MVC
 {
@@ -22,38 +29,33 @@ namespace OCS.MVC
     {
         public async Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
             await configSendGridasync(message);
         }
 
-        private async Task configSendGridasync(IdentityMessage message)
+        public async Task configSendGridasync(IdentityMessage iMessage)
+
         {
-            var myMessage = new SendGridMessage();
-            myMessage.AddTo(message.Destination);
-            myMessage.From = new System.Net.Mail.MailAddress(
-                                "Joe@contoso.com", "Joe S.");
-            myMessage.Subject = message.Subject;
-            myMessage.Text = message.Body;
-            myMessage.Html = message.Body;
 
-            var credentials = new NetworkCredential(
-                       ConfigurationManager.AppSettings["mailAccount"],
-                       ConfigurationManager.AppSettings["mailPassword"]
-                       );
+            var client = new SendGridClient("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"); // https://app.sendgrid.com
 
-            // Create a Web transport for sending email.
-            var transportWeb = new Web(credentials);
+            var msg = new SendGrid.Helpers.Mail.SendGridMessage()
 
-            // Send the email.
-            if (transportWeb != null)
             {
-                await transportWeb.DeliverAsync(myMessage);
-            }
-            else
-            {
-                Trace.TraceError("Failed to create Web transport.");
-                await Task.FromResult(0);
-            }
+
+                From = new EmailAddress("Tier@Outlook.com", "Tier One"),
+
+                Subject = iMessage.Subject,
+
+                PlainTextContent = iMessage.Body,
+
+                HtmlContent = "<strong>" + iMessage.Body + "</strong>"
+
+            };
+
+            msg.AddTo(new EmailAddress(iMessage.Destination));
+
+            var response = await client.SendEmailAsync(msg);
+
         }
     }
 
