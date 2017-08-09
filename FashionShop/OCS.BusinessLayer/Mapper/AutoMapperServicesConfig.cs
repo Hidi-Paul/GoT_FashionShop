@@ -15,7 +15,7 @@ namespace OCS.BusinessLayer.Mapping
             {
                 //cfg.CreateMap<Product,ProductModel>(); 
                 //cfg.CreateMap<ProductModel,Product>();
-                
+
 
             });
         }
