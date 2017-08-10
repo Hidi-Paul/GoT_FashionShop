@@ -32,7 +32,7 @@ namespace OCS.DataAccess.Repositories
             using (DataModel db = new DataModel())
             {
                 db.Products.Add(product);
-                db.SaveChanges();
+                var sc = db.SaveChanges();
             }
         }
     }

@@ -13,7 +13,7 @@ namespace OCS.DataAccess.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201708091106220_01-Initial"; }
+            get { return "201708101123125_01-Initial"; }
         }
         
         string IMigrationMetadata.Source

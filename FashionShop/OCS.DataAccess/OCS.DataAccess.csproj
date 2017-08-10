@@ -55,9 +55,9 @@
     <Compile Include="DataModel.cs" />
     <Compile Include="DTO\Gender.cs" />
     <Compile Include="DTO\Product.cs" />
-    <Compile Include="Migrations\201708091106220_01-Initial.cs" />
-    <Compile Include="Migrations\201708091106220_01-Initial.Designer.cs">
-      <DependentUpon>201708091106220_01-Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201708101123125_01-Initial.cs" />
+    <Compile Include="Migrations\201708101123125_01-Initial.Designer.cs">
+      <DependentUpon>201708101123125_01-Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,8 +70,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708091106220_01-Initial.resx">
-      <DependentUpon>201708091106220_01-Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708101123125_01-Initial.resx">
+      <DependentUpon>201708101123125_01-Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

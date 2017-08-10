@@ -1,7 +1,7 @@
 ﻿using System;
 namespace OCS.BusinessLayer.Models
 {
-    class ProductModel
+    public class ProductModel
     {
         public Guid ProductID { get; set; }
 

@@ -7,9 +7,14 @@ using System;
 
 namespace OCS.BusinessLayer.Services
 {
-    class ProductServices
+    public class ProductServices : IProductServices
     {
-        private IProductRepository repository;
+        private readonly IProductRepository repository;
+
+        public ProductServices(IProductRepository repository)
+        {
+            this.repository = repository;
+        }
 
         public IEnumerable<ProductModel> GetAll()
         {
