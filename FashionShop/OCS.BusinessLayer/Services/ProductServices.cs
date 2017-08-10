@@ -7,20 +7,20 @@ using System;
 
 namespace OCS.BusinessLayer.Services
 {
-    class ProductServices
+    public class ProductServices
     {
         private IProductRepository repository;
+
+        public ProductServices(IProductRepository repository)
+        {
+            this.repository = repository;
+        }
 
         public IEnumerable<ProductModel> GetAll()
         {
             IEnumerable<Product> listOfProducts =  repository.GetAllProducts();
-            List<ProductModel> mappedProducts = new List<ProductModel>();
-
-            foreach (Product p in listOfProducts)
-            {
-                ProductModel mappedProduct = Mapper.Map<ProductModel>(p);
-                mappedProducts.Add(mappedProduct);
-            }
+            IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(listOfProducts);
+            
             return mappedProducts;
         }
 
