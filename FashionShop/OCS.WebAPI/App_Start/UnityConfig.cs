@@ -20,6 +20,8 @@ namespace OCS.WebAPI
 
             container.RegisterType<IBrandRepository, BrandRepository>();
             container.RegisterType<ICategoryRepository, CategoryRepository>();
+            container.RegisterType<IColorRepository, ColorRepository>();
+            container.RegisterType<IGenderRepository, GenderRepository>();
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
