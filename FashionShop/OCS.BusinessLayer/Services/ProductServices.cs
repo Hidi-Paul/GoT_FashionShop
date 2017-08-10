@@ -13,14 +13,8 @@ namespace OCS.BusinessLayer.Services
 
         public IEnumerable<ProductModel> GetAll()
         {
-            IEnumerable<Product> listOfProducts =  repository.GetAllProducts();
-            List<ProductModel> mappedProducts = new List<ProductModel>();
-
-            foreach (Product p in listOfProducts)
-            {
-                ProductModel mappedProduct = Mapper.Map<ProductModel>(p);
-                mappedProducts.Add(mappedProduct);
-            }
+            IEnumerable<Product> listOfProducts = repository.GetAllProducts();
+            IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(listOfProducts);
             return mappedProducts;
         }
 
