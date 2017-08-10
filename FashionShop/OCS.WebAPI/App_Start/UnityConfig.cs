@@ -3,6 +3,7 @@ using OCS.BusinessLayer.Services;
 using OCS.DataAccess.Repositories;
 using System.Web.Http;
 using Unity.WebApi;
+using OCS.DataAccess.Repositories;
 
 namespace OCS.WebAPI
 {
@@ -20,6 +21,9 @@ namespace OCS.WebAPI
             container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IProductServices, ProductServices>();
             //RegisterComponents();
+
+            container.RegisterType<IBrandRepository, BrandRepository>();
+            container.RegisterType<ICategoryRepository, CategoryRepository>();
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

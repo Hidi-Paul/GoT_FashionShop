@@ -14,7 +14,7 @@ namespace OCS.BusinessLayer.Mapping
                         .ForMember(prod => prod.Gender, map => map.MapFrom(p => p.Gender.GenderName))
                         .ForMember(prod => prod.Color, map => map.MapFrom(p => p.Color.ColorName))
                         .ForMember(prod => prod.Brand, map => map.MapFrom(p => p.Brand.BrandName))
-                        .ForMember(prod => prod.Category, map => map.MapFrom(p => p.Category.CategoryName));
+                        .ForMember(prod => prod.Category, map => map.MapFrom(p => p.Category.CategoryName));                
                 cfg.CreateMap<ProductModel, Product>();
             });
         }

@@ -20,6 +20,7 @@ namespace OCS.BusinessLayer.Services
         {
             IEnumerable<Product> listOfProducts = repository.GetAllProducts();
             IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(listOfProducts);
+            
             return mappedProducts;
         }
 
