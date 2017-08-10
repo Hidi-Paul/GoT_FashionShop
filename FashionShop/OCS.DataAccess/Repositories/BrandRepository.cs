@@ -28,7 +28,7 @@ namespace OCS.DataAccess.Repositories
         {
             using(DataModel db=new DataModel())
             {
-                return db.Brands;
+                return db.Brands.ToList();
             }
         }
         public void SaveBrand(Brand brand)
