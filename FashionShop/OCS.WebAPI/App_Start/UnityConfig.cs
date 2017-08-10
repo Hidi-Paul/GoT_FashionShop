@@ -1,4 +1,6 @@
 using Microsoft.Practices.Unity;
+using OCS.BusinessLayer.Services;
+using OCS.DataAccess.Repositories;
 using System.Web.Http;
 using Unity.WebApi;
 using OCS.DataAccess.Repositories;
@@ -9,20 +11,21 @@ namespace OCS.WebAPI
     {
         public static void RegisterComponents()
         {
-			var container = new UnityContainer();
+            var container = new UnityContainer();
 
             // register all your components with the container here
             // it is NOT necessary to register your controllers
 
             // e.g. container.RegisterType<ITestService, TestService>();
 
-
+            container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<IProductServices, ProductServices>();
+            //RegisterComponents();
 
             container.RegisterType<IBrandRepository, BrandRepository>();
             container.RegisterType<ICategoryRepository, CategoryRepository>();
             container.RegisterType<IColorRepository, ColorRepository>();
             container.RegisterType<IGenderRepository, GenderRepository>();
-
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

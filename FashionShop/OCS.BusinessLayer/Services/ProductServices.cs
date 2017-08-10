@@ -7,9 +7,9 @@ using System;
 
 namespace OCS.BusinessLayer.Services
 {
-    public class ProductServices
+    public class ProductServices : IProductServices
     {
-        private IProductRepository repository;
+        private readonly IProductRepository repository;
 
         public ProductServices(IProductRepository repository)
         {
