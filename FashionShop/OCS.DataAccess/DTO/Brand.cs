@@ -14,7 +14,7 @@ namespace OCS.DataAccess
         {
             Products = new HashSet<Product>();
         }
-
+        [Key]
         public Guid BrandID { get; set; }
 
         [Required]

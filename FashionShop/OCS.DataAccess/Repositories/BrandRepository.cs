@@ -12,7 +12,7 @@ namespace OCS.DataAccess.Repositories
         {
             using(DataModel db=new DataModel())
             {
-                var brand = db.Brands.Where(x => x.BrandID == id).First();
+                var brand = db.Brands.Where(x => x.BrandID == id).FirstOrDefault();
                 return brand;
             }
         }
@@ -20,7 +20,7 @@ namespace OCS.DataAccess.Repositories
         {
             using(DataModel db=new DataModel())
             {
-                var brand = db.Brands.Where(x => x.BrandName == name).First();
+                var brand = db.Brands.Where(x => x.BrandName == name).FirstOrDefault();
                 return brand;
             }
         }

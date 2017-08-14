@@ -10,10 +10,18 @@ namespace OCS.BusinessLayer.Services
     public class ProductServices : IProductServices
     {
         private readonly IProductRepository repository;
+        private readonly IBrandRepository brandRepository;
+        private readonly ICategoryRepository categoryRepository;
+        private readonly IColorRepository colorRepository;
+        private readonly IGenderRepository genderRepository;
 
-        public ProductServices(IProductRepository repository)
+        public ProductServices(IProductRepository repository, IBrandRepository brandRepository, ICategoryRepository categoryRepository, IColorRepository colorRepository, IGenderRepository genderRepository)
         {
             this.repository = repository;
+            this.brandRepository = brandRepository;
+            this.categoryRepository = categoryRepository;
+            this.colorRepository = colorRepository;
+            this.genderRepository = genderRepository;
         }
 
         public IEnumerable<ProductModel> GetAll()
@@ -34,6 +42,42 @@ namespace OCS.BusinessLayer.Services
         public void AddProduct(ProductModel productModel)
         {
             Product mappedProduct = Mapper.Map<Product>(productModel);
+
+            mappedProduct.ProductID = Guid.NewGuid();
+
+            if (productModel.Brand != null && productModel.Brand.Length > 0)
+            {
+                var brand = brandRepository.GetBrandByName(productModel.Brand);
+                if (brand!=null)
+                {
+                    mappedProduct.BrandID = brand.BrandID;
+                }
+            }
+            if(productModel.Category != null && productModel.Category.Length > 0)
+            {
+                var categ = categoryRepository.GetCategoryByName(productModel.Category);
+                if (categ != null)
+                {
+                    mappedProduct.CategoryID = categ.CategoryID;
+                }
+            }
+            if(productModel.Color != null && productModel.Color.Length > 0)
+            {
+                var color = colorRepository.GetColorByName(productModel.Color);
+                if (color != null)
+                {
+                    mappedProduct.ColorID = color.ColorID;
+                }
+            }
+            if(productModel.Gender != null && productModel.Gender.Length > 0)
+            {
+                var gender = genderRepository.GetGenderByName(productModel.Gender);
+                if (gender != null)
+                {
+                    mappedProduct.GenderID = gender.GenderID;
+                }
+            }
+
             repository.SaveProduct(mappedProduct);
         }
     }

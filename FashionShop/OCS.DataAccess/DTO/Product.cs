@@ -12,7 +12,8 @@ namespace OCS.DataAccess
         public Product()
         {
         }
-
+        
+        [Key]
         public Guid ProductID { get; set; }
 
         [StringLength(50)]

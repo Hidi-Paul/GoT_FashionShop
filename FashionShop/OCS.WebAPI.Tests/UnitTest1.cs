@@ -17,6 +17,10 @@ namespace OCS.WebAPI.Tests
         //Declarations
         private ProductServices service;
         private Mock<IProductRepository> repo;
+        private Mock<IBrandRepository> brandRepo;
+        private Mock<ICategoryRepository> categRepo;
+        private Mock<IColorRepository> colorRepo;
+        private Mock<IGenderRepository> genderRepo;
 
         [SetUp]
         public void Init()
@@ -26,7 +30,13 @@ namespace OCS.WebAPI.Tests
             AutoMapperServicesConfig.Configure();           //productservices needs automapper to be configured
 
             repo = new Mock<IProductRepository>();          //ProductServices uses an injected repository, we'll create a mock for it
-            service = new ProductServices(repo.Object);     //We give it the "mocked object", unity wont inject a repository cuz we'll give it instead
+
+            brandRepo = new Mock<IBrandRepository>();
+            categRepo = new Mock<ICategoryRepository>();
+            colorRepo = new Mock<IColorRepository>();
+            genderRepo = new Mock<IGenderRepository>();
+
+            service = new ProductServices(repo.Object,brandRepo.Object,categRepo.Object,colorRepo.Object,genderRepo.Object);     //We give it the "mocked objects", unity wont inject a repository cuz we'll give it instead
         }
 
         [Test]

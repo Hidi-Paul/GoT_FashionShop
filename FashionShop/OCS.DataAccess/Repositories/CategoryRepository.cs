@@ -14,7 +14,7 @@ namespace OCS.DataAccess.Repositories
         {
             using (DataModel db = new DataModel())
             {
-                var categ = db.Categories.Where(x => x.CategoryID == id).First();
+                var categ = db.Categories.Where(x => x.CategoryID == id).FirstOrDefault();
                 return categ;
             }
         }
@@ -23,7 +23,7 @@ namespace OCS.DataAccess.Repositories
         {
             using (DataModel db = new DataModel())
             {
-                var categ = db.Categories.Where(x => x.CategoryName == name).First();
+                var categ = db.Categories.Where(x => x.CategoryName == name).FirstOrDefault();
                 return categ;
             }
         }

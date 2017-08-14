@@ -13,7 +13,7 @@ namespace OCS.DataAccess
         {
             Products = new HashSet<Product>();
         }
-
+        [Key]
         public Guid CategoryID { get; set; }
 
         [Required]

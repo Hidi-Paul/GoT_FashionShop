@@ -13,7 +13,7 @@ namespace OCS.DataAccess.Repositories
         {
             using (DataModel db = new DataModel())
             {
-                var gender = db.Genders.Where(x => x.GenderID == id).First();
+                var gender = db.Genders.Where(x => x.GenderID == id).FirstOrDefault();
                 return gender;
             }
         }
@@ -22,7 +22,7 @@ namespace OCS.DataAccess.Repositories
         {
             using (DataModel db = new DataModel())
             {
-                var gender = db.Genders.Where(x => x.GenderName == name).First();
+                var gender = db.Genders.Where(x => x.GenderName == name).FirstOrDefault();
                 return gender;
             }
         }

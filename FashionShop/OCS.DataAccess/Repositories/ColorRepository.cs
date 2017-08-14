@@ -13,7 +13,7 @@ namespace OCS.DataAccess.Repositories
         {
             using (DataModel db = new DataModel())
             {
-                var color = db.Colors.Where(x => x.ColorID == id).First();
+                var color = db.Colors.Where(x => x.ColorID == id).FirstOrDefault();
                 return color;
             }
         }
@@ -22,7 +22,7 @@ namespace OCS.DataAccess.Repositories
         {
             using (DataModel db = new DataModel())
             {
-                var color = db.Colors.Where(x => x.ColorName == name).First();
+                var color = db.Colors.Where(x => x.ColorName == name).FirstOrDefault();
                 return color;
             }
         }
