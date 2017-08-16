@@ -4,6 +4,7 @@ using OCS.DataAccess;
 using OCS.DataAccess.Repositories;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace OCS.BusinessLayer.Services
 {
@@ -77,8 +78,51 @@ namespace OCS.BusinessLayer.Services
                     mappedProduct.GenderID = gender.GenderID;
                 }
             }
-
             repository.SaveProduct(mappedProduct);
+        }
+
+        public IEnumerable<ProductModel> SearchProduct(string searchString)
+        {
+            IEnumerable<Product> products = repository.GetAllProducts();
+            IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(products);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                mappedProducts = mappedProducts.Where(s => s.ProductName.Contains(searchString));
+            }
+
+            return mappedProducts;
+        }
+
+        private IEnumerable<ProductModel> FilterByCategory(Category category, IEnumerable<ProductModel> products)
+        {
+            products = products.Where(p => p.Category == category.CategoryName);
+
+            return products;
+        }
+
+        private IEnumerable<ProductModel> FilterByBrand(Brand brand, IEnumerable<ProductModel> products)
+        {
+            products = products.Where(p => p.Brand == brand.BrandName);
+
+            return products;
+        }
+
+        public IEnumerable<ProductModel> Filter(Category category, Brand brand)
+        {
+            IEnumerable<Product> products = repository.GetAllProducts();
+            IEnumerable<ProductModel> filteredProducts = Mapper.Map<IEnumerable<ProductModel>>(products);
+
+            if (category != null)
+            {
+                filteredProducts = FilterByCategory(category, filteredProducts);
+            }
+            if (brand != null)
+            {
+                filteredProducts = FilterByBrand(brand, filteredProducts);
+            }
+
+            return filteredProducts;
         }
     }
 }
