@@ -84,13 +84,23 @@ namespace OCS.BusinessLayer.Services
         public IEnumerable<ProductModel> SearchProduct(string searchString)
         {
             IEnumerable<Product> products = repository.GetAllProducts();
+            IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(products);
 
-            if(!String.IsNullOrEmpty(searchString))
+            if (!String.IsNullOrEmpty(searchString))
             {
-                products = products.Where(s => s.ProductName.Contains(searchString));
+                mappedProducts = mappedProducts.Where(s => s.ProductName.Contains(searchString));
             }
 
+            return mappedProducts;
+        }
+
+        public IEnumerable<ProductModel> FilterByCategory(Category category)
+        {
+            IEnumerable<Product> products = repository.GetAllProducts();
             IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(products);
+
+            mappedProducts = mappedProducts.Where(p => p.Category == category.CategoryName);
+
             return mappedProducts;
         }
     }
