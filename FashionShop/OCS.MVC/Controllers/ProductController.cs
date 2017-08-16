@@ -48,7 +48,7 @@ namespace OCS.MVC.Controllers
         {
             HttpClientController.HttpClientController clientController = new HttpClientController.HttpClientController(HttpContext.Request.Cookies["Token"].Value);
             List<ProductModel> products;
-            Uri url = new Uri("https://localhost:44384/api/Product");
+            Uri url = new Uri("https://localhost:44384/GetAllProducts");
             products = await  GetProductsAsync(url.PathAndQuery,clientController.client);
 
 
