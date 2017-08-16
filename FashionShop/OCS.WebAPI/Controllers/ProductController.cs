@@ -1,5 +1,6 @@
 ﻿using OCS.BusinessLayer.Models;
 using OCS.BusinessLayer.Services;
+using OCS.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -67,5 +68,32 @@ namespace OCS.WebAPI.Controllers
             }
         }
 
+        [HttpGet]
+        public IHttpActionResult Search(string searchString)
+        {
+            try
+            {
+                IEnumerable<ProductModel> products = this.productServices.SearchProduct(searchString);
+                return this.Ok(products);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
+        }
+
+        [HttpGet]
+        public IHttpActionResult Filter(Category category)
+        {
+            try
+            {
+                IEnumerable<ProductModel> products = this.productServices.FilterByCategory(category);
+                return this.Ok(products);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
+        }
     }
 }

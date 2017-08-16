@@ -1,4 +1,5 @@
 ﻿using OCS.BusinessLayer.Models;
+using OCS.DataAccess;
 using System;
 using System.Collections.Generic;
 
@@ -11,5 +12,9 @@ namespace OCS.BusinessLayer.Services
         ProductModel GetByID(Guid id);
 
         void AddProduct(ProductModel productModel);
+
+        IEnumerable<ProductModel> SearchProduct(string searchString);
+
+        IEnumerable<ProductModel> FilterByCategory(Category category);
     }
 }
