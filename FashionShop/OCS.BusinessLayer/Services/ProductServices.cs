@@ -4,6 +4,7 @@ using OCS.DataAccess;
 using OCS.DataAccess.Repositories;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace OCS.BusinessLayer.Services
 {
@@ -77,8 +78,20 @@ namespace OCS.BusinessLayer.Services
                     mappedProduct.GenderID = gender.GenderID;
                 }
             }
-
             repository.SaveProduct(mappedProduct);
+        }
+
+        public IEnumerable<ProductModel> SearchProduct(string searchString)
+        {
+            IEnumerable<Product> products = repository.GetAllProducts();
+
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.ProductName.Contains(searchString));
+            }
+
+            IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(products);
+            return mappedProducts;
         }
     }
 }
