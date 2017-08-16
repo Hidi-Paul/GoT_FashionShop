@@ -9,6 +9,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using OCS.MVC.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace OCS.MVC.Controllers
 {
@@ -92,7 +96,22 @@ namespace OCS.MVC.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        HttpClient client = new HttpClient();
+
+                        client.BaseAddress = new Uri("https://localhost:44384/");
+                        client.DefaultRequestHeaders.Accept.Clear();
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                        var accessString = GetToken("https://localhost:44384/", model.Email ,model.Password );
+                        string  token = JsonConvert.DeserializeObject<Token>(accessString).access_token;
+                        System.Web.HttpCookie cookie = new HttpCookie("Token");
+                        cookie.Value = token;
+                        cookie.HttpOnly = true;
+                        cookie.Secure = true;
+                        System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
+                        return RedirectToLocal(returnUrl);
+                    }
+                    
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -512,5 +531,34 @@ namespace OCS.MVC.Controllers
         {
             return View();
         }
+
+        static string GetToken(string url, string userName, string password)
+        {
+            var pairs = new List<KeyValuePair<string, string>>
+                    {
+                        new KeyValuePair<string, string>( "grant_type", "password" ),
+                        new KeyValuePair<string, string>( "username", userName ),
+                        new KeyValuePair<string, string> ( "Password", password )
+                    };
+            var content = new FormUrlEncodedContent(pairs);
+            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            using (var client = new HttpClient())
+            {
+                var response = client.PostAsync(url + "Token", content).Result;
+                return response.Content.ReadAsStringAsync().Result;
+            }
+        }
+    }
+
+    public class Token
+    {
+        public string access_token { get; set; }
+        public string token_type { get; set; }
+        public int expires_in { get; set; }
+        public string userName { get; set; }
+        [JsonProperty(".issued")]
+        public string issued { get; set; }
+        [JsonProperty(".expires")]
+        public string expires { get; set; }
     }
 }

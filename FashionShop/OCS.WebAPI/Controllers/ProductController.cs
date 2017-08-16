@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Web.Http;
 
 namespace OCS.WebAPI.Controllers
-{
+
+{   [Authorize]
     public class ProductController : ApiController
     {
         public ProductController() : base()
