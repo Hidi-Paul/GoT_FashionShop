@@ -1,12 +1,14 @@
 ﻿using OCS.BusinessLayer.Models;
 using OCS.BusinessLayer.Services;
+using OCS.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
 
 namespace OCS.WebAPI.Controllers
 
-{   [Authorize]
+{
+    [Authorize]
     public class ProductController : ApiController
     {
         public ProductController() : base()
@@ -20,6 +22,7 @@ namespace OCS.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllProducts")]
         public IHttpActionResult GetAllProducts()
         {
             try
@@ -34,6 +37,7 @@ namespace OCS.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("GetProductByID")]
         public IHttpActionResult GetProductById(Guid id)
         {
             try
@@ -48,6 +52,7 @@ namespace OCS.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("PostProduct")]
         public IHttpActionResult PostProduct([FromBody] ProductModel product)
         {
             if (!ModelState.IsValid)
@@ -68,5 +73,34 @@ namespace OCS.WebAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Search")]
+        public IHttpActionResult Search(string searchString)
+        {
+            try
+            {
+                IEnumerable<ProductModel> products = this.productServices.SearchProduct(searchString);
+                return this.Ok(products);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
+        }
+
+        [HttpGet]
+        [Route("Filter")]
+        public IHttpActionResult Filter(Category category = null, Brand brand = null)
+        {
+            try
+            {
+                IEnumerable<ProductModel> products = this.productServices.Filter(category, brand);
+                return this.Ok(products);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
+        }
     }
 }
