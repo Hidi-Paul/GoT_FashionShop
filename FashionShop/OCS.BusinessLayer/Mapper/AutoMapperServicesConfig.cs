@@ -8,15 +8,8 @@ namespace OCS.BusinessLayer.Mapping
 {
     public class AutoMapperServicesConfig
     {
-        private static IBrandRepository brandRepository=new BrandRepository();
-        private static ICategoryRepository categRepository=new CategoryRepository();
-        private static IColorRepository colorRepository=new ColorRepository();
-        private static IGenderRepository genderRepository=new GenderRepository();
-
         public static void Configure()
         {
-
-
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<ProductModel, Product>()

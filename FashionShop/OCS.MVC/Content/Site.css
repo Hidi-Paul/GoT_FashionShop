@@ -22,3 +22,41 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Lets begin */
+
+.storeContainer{
+    min-height:200px;
+    background-color:green;
+    margin:0;
+}
+
+.storeLeftBar{
+    min-height:50px;
+    background-color:aqua;
+}
+
+.storeContent {
+    min-height: 50px;
+    background-color: red;
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.productContainer{
+    min-height:190px;
+    background-color:dimgrey;
+    border:dashed;
+    border-width:2px;
+    border-color:black;
+    padding:5px;
+
+}
+
+.productContainer img{
+    max-height:100%;
+    max-width:100%;
+    object-fit:contain;
+    margin:0;
+
+}
