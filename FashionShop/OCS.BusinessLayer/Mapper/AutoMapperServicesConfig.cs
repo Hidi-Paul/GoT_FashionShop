@@ -8,10 +8,8 @@ namespace OCS.BusinessLayer.Mapping
 {
     public class AutoMapperServicesConfig
     {
-
         public static void Configure()
         {
-
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<ProductModel, Product>()
