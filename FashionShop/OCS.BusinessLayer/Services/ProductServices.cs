@@ -94,14 +94,35 @@ namespace OCS.BusinessLayer.Services
             return mappedProducts;
         }
 
-        public IEnumerable<ProductModel> FilterByCategory(Category category)
+        private IEnumerable<ProductModel> FilterByCategory(Category category, IEnumerable<ProductModel> products)
+        {
+            products = products.Where(p => p.Category == category.CategoryName);
+
+            return products;
+        }
+
+        private IEnumerable<ProductModel> FilterByBrand(Brand brand, IEnumerable<ProductModel> products)
+        {
+            products = products.Where(p => p.Brand == brand.BrandName);
+
+            return products;
+        }
+
+        public IEnumerable<ProductModel> Filter(Category category, Brand brand)
         {
             IEnumerable<Product> products = repository.GetAllProducts();
-            IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(products);
+            IEnumerable<ProductModel> filteredProducts = Mapper.Map<IEnumerable<ProductModel>>(products);
 
-            mappedProducts = mappedProducts.Where(p => p.Category == category.CategoryName);
+            if (category != null)
+            {
+                filteredProducts = FilterByCategory(category, filteredProducts);
+            }
+            if (brand != null)
+            {
+                filteredProducts = FilterByBrand(brand, filteredProducts);
+            }
 
-            return mappedProducts;
+            return filteredProducts;
         }
     }
 }

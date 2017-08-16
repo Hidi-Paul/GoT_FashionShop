@@ -15,6 +15,6 @@ namespace OCS.BusinessLayer.Services
 
         IEnumerable<ProductModel> SearchProduct(string searchString);
 
-        IEnumerable<ProductModel> FilterByCategory(Category category);
+        IEnumerable<ProductModel> Filter(Category category, Brand brand);
     }
 }

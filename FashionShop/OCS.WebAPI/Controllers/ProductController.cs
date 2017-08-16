@@ -20,6 +20,7 @@ namespace OCS.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllProducts")]
         public IHttpActionResult GetAllProducts()
         {
             try
@@ -34,6 +35,7 @@ namespace OCS.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("GetProductByID")]
         public IHttpActionResult GetProductById(Guid id)
         {
             try
@@ -48,6 +50,7 @@ namespace OCS.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Route("PostProduct")]
         public IHttpActionResult PostProduct([FromBody] ProductModel product)
         {
             if (!ModelState.IsValid)
@@ -69,6 +72,7 @@ namespace OCS.WebAPI.Controllers
         }
 
         [HttpGet]
+        [Route("Search")]
         public IHttpActionResult Search(string searchString)
         {
             try
@@ -83,11 +87,12 @@ namespace OCS.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Filter(Category category)
+        [Route("Filter")]
+        public IHttpActionResult Filter(Category category = null, Brand brand = null)
         {
             try
             {
-                IEnumerable<ProductModel> products = this.productServices.FilterByCategory(category);
+                IEnumerable<ProductModel> products = this.productServices.Filter(category, brand);
                 return this.Ok(products);
             }
             catch (Exception e)
