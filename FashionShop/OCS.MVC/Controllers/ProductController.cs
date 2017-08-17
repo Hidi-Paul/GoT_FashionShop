@@ -13,5 +13,11 @@ namespace OCS.MVC.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult AddProduct()
+        {
+            return View();
+        }
     }
 }
