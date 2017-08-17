@@ -3,23 +3,8 @@ button.addEventListener("click", myFunc);
 
 var serverAddr ="https://localhost:44300/"
 
-function myFunc() {
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://localhost:44300/GetAllProducts');
-    xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            alert("DONE");
-        }
-        else {
-            alert('Request failed.  Returned status of ' + xhr.status);
-        }
-    };
-    alert("HEY")
-    xhr.send();
-}
+var brands;
+var categs;
 
 window.onload = function () {
     getBrands();
@@ -34,7 +19,10 @@ function getBrands() {
     xhr.onload = function () {
         if (xhr.status === 200) {
             console.log("brands:", xhr.response);
-            initBrands(xhr.response);
+            brands = xhr.response;
+
+
+            initBrands();
         }
         else {
             alert('Brand Request failed.  Returned status of ' + xhr.status);
@@ -50,7 +38,9 @@ function getCategs() {
     xhr.onload = function () {
         if (xhr.status === 200) {
             console.log("categs:", xhr.response);
-            initCategs(xhr.response);
+            categs = xhr.response;
+            
+            initCategs();
         }
         else {
             alert('Categories Request failed.  Returned status of ' + xhr.status);
