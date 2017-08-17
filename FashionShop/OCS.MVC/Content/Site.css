@@ -25,38 +25,96 @@ textarea {
 
 /* Lets begin */
 
+
+/* Fancy Hats*/
 .storeContainer{
-    min-height:200px;
-    background-color:green;
     margin:0;
 }
 
-.storeLeftBar{
-    min-height:50px;
-    background-color:aqua;
-}
 
 .storeContent {
     min-height: 50px;
-    background-color: red;
     padding-left: 7px;
     padding-right: 7px;
 }
 
-.productContainer{
-    min-height:190px;
-    background-color:dimgrey;
-    border:dashed;
-    border-width:2px;
-    border-color:black;
-    padding:5px;
-
+.prodCard {
+    padding: 3px;
+}
+.prodCard:hover{
+    background-color:whitesmoke
 }
 
-.productContainer img{
-    max-height:100%;
-    max-width:100%;
-    object-fit:contain;
-    margin:0;
+.prodContainer{
+    background-color:white;
+}
+
+.prodContainer img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+        padding: 0px;
+        padding-top: 2px;
+}
+
+.prodContainer .prodContainer-body {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 0px;
+    position: relative;
+    max-width: 100%;
+    height: 100%;
+    background-color: white
+}
+
+.prodContainer-body h4 {
+    text-align: center;
+}
+
+.prodContainer-body p {
+    text-align: center;
+}
+
+/* Fancy Left Bar */
+
+.storeLeftBar {
+    min-height: 50px;
+    background-color: aqua;
+    padding:5px;
+}
+
+.storeLeftBar .bigThingie{
+    background-color:lightgreen;
+    min-height:50px;
+    width:100%;
+
+    padding-top:5px;
+
+    float:right;
+    text-align:right;
+
+    cursor:pointer;
+}
+.storeLeftBar .bigThingie h4 {
+    font-style: italic;
+    font-weight: 700;
+    line-height: 70%;
+
+    position:relative;
+}
+.bigThingie .smallThingie {
+    margin: 0;
+    padding: 0;
+}
+.bigThingie .smallThingie h4 {
+    font-style:italic;
+    font-weight:400;
+    line-height:70%;
+}
+
+.thing{
+    background-color:pink;
+
+    min-height:300px;
 
 }
