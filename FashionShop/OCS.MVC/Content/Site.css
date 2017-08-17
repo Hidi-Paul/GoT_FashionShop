@@ -79,37 +79,35 @@ textarea {
 
 .storeLeftBar {
     min-height: 50px;
-    background-color: aqua;
     padding:5px;
 }
 
-.storeLeftBar .bigThingie{
-    background-color:lightgreen;
-    min-height:50px;
-    width:100%;
 
-    padding-top:5px;
-
-    float:right;
-    text-align:right;
-
+.bigThingie{
     cursor:pointer;
+    border:none;
 }
-.storeLeftBar .bigThingie h4 {
-    font-style: italic;
+.bigThingie h4 {
     font-weight: 700;
-    line-height: 70%;
-
-    position:relative;
+    text-align: right;
 }
-.bigThingie .smallThingie {
+.bigThingie h4 a{
+    letter-spacing:1px;
+    text-decoration:none;
+}
+
+.smallThingies{
     margin: 0;
     padding: 0;
 }
-.bigThingie .smallThingie h4 {
-    font-style:italic;
-    font-weight:400;
-    line-height:70%;
+
+.smallThingies li {
+    font-style: italic;
+    font-weight: 400;
+    line-height: 70%;
+
+    text-align:right;
+    cursor:pointer;
 }
 
 .thing{

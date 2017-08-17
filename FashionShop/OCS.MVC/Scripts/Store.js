@@ -18,3 +18,22 @@ function myFunc() {
     alert("HEY")
     xhr.send();
 }
+
+window.onload = function () {
+    loadCategories();
+};
+
+function loadCategories() {
+    var colBrand = document.getElementById("collapsibleBrands");
+    var colCateg = document.getElementById("collapsibleCategs");
+
+    var Brandies = colBrand.getElementsByClassName("smallThingies");
+    var Categies = colCateg.getElementsByClassName("smallThingies");
+
+    console.log("Brandies", Brandies)
+    console.log("Categies", Categies)
+
+
+
+    console.log("Left Bar initialized");
+};
