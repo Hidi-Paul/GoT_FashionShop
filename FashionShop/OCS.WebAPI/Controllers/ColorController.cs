@@ -9,23 +9,23 @@ namespace OCS.WebAPI.Controllers
 {
     [EnableCors("*", "*", "*")]
     [System.Web.Mvc.RequireHttps]
-    public class BrandController : ApiController
+    public class ColorController : ApiController
     {
-        private readonly IBrandServices brandServices;
+        private readonly IColorServices colorServices;
 
-        public BrandController(IBrandServices brandServices)
+        public ColorController(IColorServices colorServices)
         {
-            this.brandServices = brandServices;
+            this.colorServices = colorServices;
         }
 
         [HttpGet]
         [Route("GetAllBrands")]
-        public IHttpActionResult GetAllBrands()
+        public IHttpActionResult GetAllColors()
         {
             try
             {
-                IEnumerable<BrandModel> brands = this.brandServices.GetAll();
-                return this.Ok(brands);
+                IEnumerable<ColorModel> colors = this.colorServices.GetAll();
+                return this.Ok(colors);
             }
             catch (Exception e)
             {
