@@ -5,6 +5,7 @@ using System.Web.Http;
 
 namespace OCS.WebAPI
 {
+    
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)
@@ -19,6 +20,7 @@ namespace OCS.WebAPI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.EnableCors();
         }
     }
 }

@@ -4,9 +4,12 @@ using OCS.DataAccess;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Web;
+using System.Web.Http.Cors;
 
 namespace OCS.WebAPI.Controllers
 {
+    [System.Web.Mvc.RequireHttps]
     public class ProductController : ApiController
     {
         public ProductController() : base()
@@ -21,6 +24,7 @@ namespace OCS.WebAPI.Controllers
 
         [HttpGet]
         [Route("GetAllProducts")]
+        [EnableCors("*", "*", "*")]
         public IHttpActionResult GetAllProducts()
         {
             try

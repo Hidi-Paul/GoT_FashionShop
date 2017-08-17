@@ -25,14 +25,12 @@ textarea {
 
 /* Lets begin */
 
+
+/* Fancy Hats*/
 .storeContainer{
     margin:0;
 }
 
-.storeLeftBar{
-    min-height:50px;
-    background-color:aqua;
-}
 
 .storeContent {
     min-height: 50px;
@@ -75,4 +73,48 @@ textarea {
 
 .prodContainer-body p {
     text-align: center;
+}
+
+/* Fancy Left Bar */
+
+.storeLeftBar {
+    min-height: 50px;
+    background-color: aqua;
+    padding:5px;
+}
+
+.storeLeftBar .bigThingie{
+    background-color:lightgreen;
+    min-height:50px;
+    width:100%;
+
+    padding-top:5px;
+
+    float:right;
+    text-align:right;
+
+    cursor:pointer;
+}
+.storeLeftBar .bigThingie h4 {
+    font-style: italic;
+    font-weight: 700;
+    line-height: 70%;
+
+    position:relative;
+}
+.bigThingie .smallThingie {
+    margin: 0;
+    padding: 0;
+}
+.bigThingie .smallThingie h4 {
+    font-style:italic;
+    font-weight:400;
+    line-height:70%;
+}
+
+.thing{
+    background-color:pink;
+
+    min-height:300px;
+
 }
