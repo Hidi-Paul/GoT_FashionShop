@@ -73,12 +73,17 @@ function initBrands() {
     for (var i = 0; i < brands.length; i++) {
         var newNode = document.createElement("li")
         newNode.classList = "list-group-item";
-        newNode.value = brands[i].Name;
-        newNode.innerText = brands[i].Name;
+        newNode.textContent = brands[i].Name;
+        newNode.id = "BrandFilterNo" + i;
+        newNode.objId = newNode.id;
+        newNode.isTriggered = false;
+
+        newNode.addEventListener("click", FilterToggle);
 
         listToBePopulated.appendChild(newNode);
     }
 };
+
 function initCategs() {
     var colCateg = document.getElementById("collapsibleCategs");
     var Categies = colCateg.getElementsByClassName("smallThingies");
@@ -87,9 +92,55 @@ function initCategs() {
     for (var i = 0; i < categs.length; i++) {
         var newNode = document.createElement("li")
         newNode.classList = "list-group-item";
-        newNode.value = categs[i].Name;
-        newNode.innerText = categs[i].Name;
+        newNode.textContent = categs[i].Name;
+        newNode.id = "CategFilterNo" + i;
+        newNode.objId = newNode.id;
+        newNode.isTriggered = false;
+
+        newNode.addEventListener("click", FilterToggle);
 
         listToBePopulated.appendChild(newNode);
     }
 };
+
+function FilterToggle(evt) {
+    var filterObj = document.getElementById(evt.target.objId)
+
+    if (filterObj.isTriggered) {
+        filterObj.isTriggered = false;
+        filterObj.style.backgroundColor = "white";
+    } else {
+        filterObj.isTriggered = true;
+        filterObj.style.backgroundColor = "#b3daff";
+    }
+
+    UpdateProducts();
+}
+function UpdateProducts() {
+    var activeBrandFilters = [];
+    var activeCategoryFilters = [];
+
+    var colBrand = document.getElementById("collapsibleBrands");
+    var Brandies = colBrand.getElementsByClassName("smallThingies");
+    var possibleFilters = Brandies[0].children;
+    
+    for (var i = 0; i < possibleFilters.length; i++) {
+        if (possibleFilters[i].isTriggered) {
+            activeBrandFilters.push(possibleFilters[i].innerText);
+        }
+    }
+
+    var colCateg = document.getElementById("collapsibleCategs");
+    var Categies = colCateg.getElementsByClassName("smallThingies");
+    possibleFilters = Categies[0].children;
+
+    for (var i = 0; i < possibleFilters.length; i++) {
+        if (possibleFilters[i].isTriggered) {
+            activeCategoryFilters.push(possibleFilters[i].innerText);
+        }
+    }
+
+
+    console.log(activeBrandFilters);
+    console.log(activeCategoryFilters);
+}
