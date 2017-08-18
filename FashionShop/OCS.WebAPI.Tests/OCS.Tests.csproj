@@ -82,10 +82,6 @@
       <Project>{e1f6e986-4603-41e6-a179-afeae66caca7}</Project>
       <Name>OCS.MVC</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OCS.WebAPI\OCS.WebAPI.csproj">
-      <Project>{15A1F089-930D-4334-8AEC-E8F0553B8444}</Project>
-      <Name>OCS.WebAPI</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

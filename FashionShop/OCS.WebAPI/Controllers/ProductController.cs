@@ -8,9 +8,14 @@ using System.Web;
 using System.Web.Http.Cors;
 
 namespace OCS.WebAPI.Controllers
+
 {
+<<<<<<< HEAD
     [EnableCors("*", "*", "*")]
     [System.Web.Mvc.RequireHttps]
+=======
+    [Authorize]
+>>>>>>> d8a33745bad804a6194c3d58207f7b6555c24e4d
     public class ProductController : ApiController
     {
         public ProductController() : base()
