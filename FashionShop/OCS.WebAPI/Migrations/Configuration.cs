@@ -1,18 +1,18 @@
-namespace OCS.DataAccess.Migrations
+namespace OCS.WebAPI.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<OCS.DataAccess.DataModel>
+    internal sealed class Configuration : DbMigrationsConfiguration<OCS.WebAPI.Models.ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(OCS.DataAccess.DataModel context)
+        protected override void Seed(OCS.WebAPI.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
