@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OCS.DataAccess.Repositories
 {
@@ -36,7 +34,7 @@ namespace OCS.DataAccess.Repositories
 
         public void SaveColor(Color color)
         {
-            using(DataModel db=new DataModel())
+            using (DataModel db = new DataModel())
             {
                 db.Colors.Add(color);
                 db.SaveChanges();

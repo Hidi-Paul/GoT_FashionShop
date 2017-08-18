@@ -22,6 +22,7 @@ namespace OCS.WebAPI
             container.RegisterType<IProductServices, ProductServices>();
             container.RegisterType<ICategoryServices, CategoryServices>();
             container.RegisterType<IBrandServices, BrandServices>();
+            container.RegisterType<IColorServices, ColorServices>();
             //RegisterComponents();
 
             container.RegisterType<IBrandRepository, BrandRepository>();
