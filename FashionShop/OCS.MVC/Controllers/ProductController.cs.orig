@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -26,17 +25,11 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Net;
 
-=======
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
->>>>>>> origin/DEV_Paul
 
 namespace OCS.MVC.Controllers
 {
     public class ProductController : Controller
     {
-<<<<<<< HEAD
         //ApplicationDbContext db = new ApplicationDbContext();
 
         static async Task<List<ProductModel>> GetProductsAsync(string path,HttpClient client)
@@ -62,6 +55,7 @@ namespace OCS.MVC.Controllers
             return View(products);
         }
 
+<<<<<<< HEAD
         //// GET: Product/Details/5
         //public ActionResult Details(Guid? id)
         //{
@@ -166,14 +160,12 @@ namespace OCS.MVC.Controllers
         //    }
         //    base.Dispose(disposing);
         //}
-    }
-}
 =======
-        // GET: Product
-        public ActionResult Index()
+        [HttpPost]
+        public ActionResult AddProduct()
         {
             return View();
         }
+>>>>>>> 063158284a289a7ea51a08ce1e500bf52d9f0baf
     }
 }
->>>>>>> origin/DEV_Paul
