@@ -20,12 +20,16 @@ namespace OCS.WebAPI
 
             container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IProductServices, ProductServices>();
+            container.RegisterType<ICategoryServices, CategoryServices>();
+            container.RegisterType<IBrandServices, BrandServices>();
             //RegisterComponents();
 
             container.RegisterType<IBrandRepository, BrandRepository>();
             container.RegisterType<ICategoryRepository, CategoryRepository>();
             container.RegisterType<IColorRepository, ColorRepository>();
             container.RegisterType<IGenderRepository, GenderRepository>();
+
+
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

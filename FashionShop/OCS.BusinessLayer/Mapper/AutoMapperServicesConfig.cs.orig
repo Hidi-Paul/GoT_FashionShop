@@ -8,8 +8,15 @@ namespace OCS.BusinessLayer.Mapping
 {
     public class AutoMapperServicesConfig
     {
+<<<<<<< HEAD
         public static void Configure()
         {
+=======
+
+        public static void Configure()
+        {
+
+>>>>>>> origin/DEV_Elena
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<ProductModel, Product>()
@@ -27,11 +34,8 @@ namespace OCS.BusinessLayer.Mapping
                         .ForMember(prod => prod.Gender, map => map.MapFrom(p =>p.Gender.GenderName))
                         .ForMember(prod => prod.Color, map => map.MapFrom(p => p.Color.ColorName))
                         .ForMember(prod => prod.Brand, map => map.MapFrom(p => p.Brand.BrandName))
-                        .ForMember(prod => prod.Category, map => map.MapFrom(p => p.Category.CategoryName));
-                cfg.CreateMap<Category, CategoryModel>()
-                        .ForMember(cat => cat.Name, map => map.MapFrom(p => p.CategoryName));
-                cfg.CreateMap<Brand, BrandModel>()
-                        .ForMember(bran => bran.Name, map => map.MapFrom(p => p.BrandName));
+                        .ForMember(prod => prod.Category, map => map.MapFrom(p => p.Category.CategoryName));                
+
             });
 
         }        

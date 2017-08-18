@@ -10,7 +10,12 @@ using System.Web.Http.Cors;
 namespace OCS.WebAPI.Controllers
 
 {
+
+    [EnableCors("*", "*", "*")]
+    [System.Web.Mvc.RequireHttps]
+
     [Authorize]
+
     public class ProductController : ApiController
     {
         public ProductController() : base()
@@ -25,7 +30,6 @@ namespace OCS.WebAPI.Controllers
 
         [HttpGet]
         [Route("GetAllProducts")]
-        [EnableCors("*", "*", "*")]
         public IHttpActionResult GetAllProducts()
         {
             try
