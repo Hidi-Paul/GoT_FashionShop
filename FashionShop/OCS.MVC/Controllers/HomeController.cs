@@ -21,9 +21,10 @@ namespace OCS.MVC.Controllers
             return View();
         }
 
-        [AccessDeniedAuthorize(Roles ="admin")]
+        
         public ActionResult Contact()
         {
+            
             ViewBag.Message = "Your contact page.";
 
             return View();

@@ -1,9 +1,10 @@
-﻿using OCS.BusinessLayer.Mapping;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 
 namespace OCS.WebAPI
@@ -13,9 +14,12 @@ namespace OCS.WebAPI
         protected void Application_Start()
         {
             UnityConfig.RegisterComponents();
+            AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            
-            AutoMapperServicesConfig.Configure();
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            BusinessLayer.Mapping.AutoMapperServicesConfig.Configure();
         }
     }
 }

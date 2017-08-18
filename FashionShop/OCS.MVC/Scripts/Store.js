@@ -35,11 +35,24 @@ window.onload = function () {
     getProducts();
 };
 
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
 function getBrands() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', serverAddr + 'GetAllBrands');
     xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.setRequestHeader("Authorization", 'Bearer ' + 'mOQMWWvVsC7LmXSsGIu3GcIcFOmqJxmG0m7YHqLAbOI88qBcarISEOWm_hMs37DytOcmo17spMedmQUswOwi_PnsJoct2lXXOud2f0bjPvS3iY3r4QoJ2oMIwyjci8WKyB2UPWP4a9jU3PcQp0XsD4GeQbqA6HPOL9oRDibc87fEuPGtg8qm7569z2AO_dgTFbQIloe4IP2EErYxha-mbPjdGVYULF-3YnwITiFMQeR7fwNW6J-Cdax7r0QgJdSKd66bCBRuT4uuLGHUPxC6tBzi8lMn6Z0Jlk0OE9X24T5sKvASIjOIAkU5nMa5BPnZr38RzTabTTp6sgi2i_UxzpfiwNiINMpluHZO6P2t339VDKtByDmCqCdnhHpJa7-RDOzGWDXe5s16T-wZ3EFueKNiPqcbCQUZQG5qhOVPMV2foP-dErcsI91z7RHfT9YfOtRtfPHRNDxyOgFXAMeu5lHKbMhNPIrIOxLDKpnIPD9vnDv0gNC3VpA1bmzU6bMExwlez3r_tL6RDSqaftyXXw' ); 
+    
     xhr.onload = function () {
         if (xhr.status === 200) {
             //console.log("brands:", xhr.response);

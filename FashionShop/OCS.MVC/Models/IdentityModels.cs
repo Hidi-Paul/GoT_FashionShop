@@ -29,5 +29,7 @@ namespace OCS.MVC.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<OCS.MVC.Models.ProductModel> ProductModels { get; set; }
     }
 }
