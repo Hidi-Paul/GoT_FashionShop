@@ -30,6 +30,7 @@ namespace OCS.WebAPI.Controllers
             try
             {
                 IEnumerable<ProductModel> products = this.productServices.GetAll();
+                
                 return this.Ok(products);
             }
             catch (Exception e)

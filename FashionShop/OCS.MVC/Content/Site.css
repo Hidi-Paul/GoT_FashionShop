@@ -48,13 +48,15 @@ textarea {
 .prodContainer{
     background-color:white;
 }
-
+imgContainer {
+    height: 300px;
+}
 .prodContainer img {
-        max-height: 100%;
-        max-width: 100%;
-        object-fit: contain;
-        padding: 0px;
-        padding-top: 2px;
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    padding: 0px;
+    padding-top: 2px;
 }
 
 .prodContainer .prodContainer-body {

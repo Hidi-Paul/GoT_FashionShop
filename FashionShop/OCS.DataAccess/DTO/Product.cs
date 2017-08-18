@@ -36,7 +36,6 @@ namespace OCS.DataAccess
         public virtual Color Color { get; set; }
 
         public virtual Gender Gender { get; set; }
-
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
     }
 }

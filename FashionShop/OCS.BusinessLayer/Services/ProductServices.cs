@@ -5,6 +5,7 @@ using OCS.DataAccess.Repositories;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Text;
 
 namespace OCS.BusinessLayer.Services
 {
@@ -28,7 +29,8 @@ namespace OCS.BusinessLayer.Services
         public IEnumerable<ProductModel> GetAll()
         {
             IEnumerable<Product> listOfProducts = repository.GetAllProducts();
-            IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(listOfProducts);
+
+            IEnumerable <ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(listOfProducts);
             
             return mappedProducts;
         }

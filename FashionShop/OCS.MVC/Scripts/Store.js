@@ -98,13 +98,11 @@ function getProductsFiltered(categoryFilters, brandFilters) {
         xhr.open('GET', serverAddr + 'FilteredSearch'
             + "?" + searchText
             + "?" + JSON.stringify(categoryFilters)
-            + "?" + JSON.stringify(brandFilters)
-            + "?format=json");
+            + "?" + JSON.stringify(brandFilters));
     } else {
         xhr.open('GET', serverAddr + 'Filter'
             + "?" + JSON.stringify(categoryFilters)
-            + "?" + JSON.stringify(brandFilters)
-            + "?format=json");
+            + "?" + JSON.stringify(brandFilters));
     }
     
     xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
@@ -168,6 +166,10 @@ function initProducts() {
         newCard.classList = "col-md-3 prodCard";
         var newCardContainer = document.createElement("div");
         newCardContainer.classList = "prodContainer";
+
+        var newImageContainer = document.createElement("div");
+        newImageContainer.classList = "imgContainer";
+
         var newCardImage = document.createElement("img");
         var newCardContainerBody = document.createElement("div");
         newCardContainerBody.classList = "prodContainer-body";
@@ -177,19 +179,18 @@ function initProducts() {
         newCardBrand.classList = "prodBrand";
         var newCardPrice = document.createElement("p");
         newCardPrice.classList = "prodPrice";
+        
 
-        var arr = ""+products[i].Image+"";
-        var arr = decode_utf8(arr);
-        console.log(arr.substring(0,40));
-
-        newCardImage.src = "data:image/jpg;base64,"+arr;
+        newCardImage.src = products[i].Image;
         newCardTitle.innerText = products[i].ProductName;
         newCardBrand.innerText = products[i].Brand;
-        newCardPrice.innerText = products[i].ProductPrice;
+        newCardPrice.innerText = products[i].ProductPrice+"$";
 
 
         newCard.appendChild(newCardContainer);
-        newCardContainer.appendChild(newCardImage);
+        newImageContainer.appendChild(newCardImage);
+
+        newCardContainer.appendChild(newImageContainer);
 
 
         newCardContainer.appendChild(newCardContainerBody);
@@ -200,14 +201,9 @@ function initProducts() {
         storeContent.appendChild(newCard);
     }
 };
-function encode_utf8(s) {
-    return unescape(encodeURIComponent(s));
+function hexToBase64(str) {
+    return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
 }
-
-function decode_utf8(s) {
-    return decodeURIComponent(escape(s));
-}
-
 function FilterToggle(evt) {
     var filterObj = document.getElementById(evt.target.objId)
 

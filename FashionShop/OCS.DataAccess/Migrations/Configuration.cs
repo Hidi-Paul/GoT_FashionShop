@@ -10,6 +10,7 @@ namespace OCS.DataAccess.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(OCS.DataAccess.DataModel context)
