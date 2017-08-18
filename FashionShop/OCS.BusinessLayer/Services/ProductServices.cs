@@ -96,32 +96,54 @@ namespace OCS.BusinessLayer.Services
 
         private IEnumerable<ProductModel> FilterByCategory(Category category, IEnumerable<ProductModel> products)
         {
-            products = products.Where(p => p.Category == category.CategoryName);
-
-            return products;
+            return products.Where(p => p.Category == category.CategoryName);
         }
 
         private IEnumerable<ProductModel> FilterByBrand(Brand brand, IEnumerable<ProductModel> products)
         {
-            products = products.Where(p => p.Brand == brand.BrandName);
-
-            return products;
+            return products.Where(p => p.Brand == brand.BrandName);
         }
 
-        public IEnumerable<ProductModel> Filter(Category category, Brand brand)
+        public IEnumerable<ProductModel> Filter(List<Category> category, List<Brand> brand)
         {
             IEnumerable<Product> products = repository.GetAllProducts();
-            IEnumerable<ProductModel> filteredProducts = Mapper.Map<IEnumerable<ProductModel>>(products);
+            IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(products);
 
+            List<ProductModel> filteredByCateg= new List<ProductModel>();
             if (category != null)
             {
-                filteredProducts = FilterByCategory(category, filteredProducts);
+                foreach(Category filter in category)
+                {
+                    var results = FilterByCategory(filter, mappedProducts);
+                    filteredByCateg.AddRange(results);
+                }
             }
+            List<ProductModel> filteredByBrand= new List<ProductModel>();
             if (brand != null)
             {
-                filteredProducts = FilterByBrand(brand, filteredProducts);
+                foreach (Brand filter in brand)
+                {
+                    var results = FilterByBrand(filter, mappedProducts);
+                    filteredByBrand.AddRange(results);
+                }
             }
 
+            IEnumerable<ProductModel> filteredProducts = filteredByBrand.Intersect(filteredByCateg);
+            
+            return filteredProducts;
+        }
+        public IEnumerable<ProductModel> FilteredSearch(string searchString, List<Category> category = null, List<Brand> brand = null)
+        {
+            IEnumerable<ProductModel> filteredProducts;
+            if (category == null && brand == null)
+            {
+                filteredProducts = SearchProduct(searchString);
+            }
+            else
+            {
+                filteredProducts = Filter(category, brand);
+                filteredProducts= filteredProducts.Where(p => p.ProductName.Contains(searchString));
+            }
             return filteredProducts;
         }
     }

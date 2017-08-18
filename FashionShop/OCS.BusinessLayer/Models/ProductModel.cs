@@ -16,5 +16,7 @@ namespace OCS.BusinessLayer.Models
         public string Brand { get; set; }
 
         public string Category { get; set; }
+
+        public byte[] Image { get; set; }
     }
 }

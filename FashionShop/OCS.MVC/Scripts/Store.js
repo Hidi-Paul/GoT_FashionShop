@@ -2,9 +2,11 @@
 
 var brands;
 var categs;
+var products
 
 var brandCollapseBtn = document.getElementById("collapsibleBrands");
 var categCollapseBtn = document.getElementById("collapsibleCategs");
+var searchBar = document.getElementById("searchBar");
 
 if (brandCollapseBtn != null) {
     var trigger = brandCollapseBtn.querySelectorAll(".bigThingie")[0];
@@ -22,10 +24,15 @@ if (categCollapseBtn != null) {
         $(categCollapsibles).collapse("toggle"); /*imi recunosc pacatele*/
     });
 }
-
+if (searchBar != null) {
+    searchBar.addEventListener("keyup", function () {
+        UpdateProducts();
+    })
+}
 window.onload = function () {
     getBrands();
     getCategs();
+    getProducts();
 };
 
 function getBrands() {
@@ -65,6 +72,56 @@ function getCategs() {
     };
     xhr.send();
 }
+function getProducts() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', serverAddr + 'GetAllProducts');
+    xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            //console.log("prods:", xhr.response);
+            products = JSON.parse(xhr.response);
+
+            initProducts();
+        }
+        else {
+            alert('Products Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send();
+}
+function getProductsFiltered(categoryFilters, brandFilters) {
+    var xhr = new XMLHttpRequest();
+    
+    if (searchBar.textContent.length > 0) {
+        var searchText = searchBar.textContent;
+        xhr.open('GET', serverAddr + 'FilteredSearch'
+            + "?" + searchText
+            + "?" + JSON.stringify(categoryFilters)
+            + "?" + JSON.stringify(brandFilters)
+            + "?format=json");
+    } else {
+        xhr.open('GET', serverAddr + 'Filter'
+            + "?" + JSON.stringify(categoryFilters)
+            + "?" + JSON.stringify(brandFilters)
+            + "?format=json");
+    }
+    
+    xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            //console.log("prods:", xhr.response);
+            products = JSON.parse(xhr.response);
+
+            initProducts();
+        }
+        else {
+            alert('Filter Products Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send();
+}
 function initBrands() {
     var colBrand = document.getElementById("collapsibleBrands");
     var Brandies = colBrand.getElementsByClassName("smallThingies");
@@ -83,7 +140,6 @@ function initBrands() {
         listToBePopulated.appendChild(newNode);
     }
 };
-
 function initCategs() {
     var colCateg = document.getElementById("collapsibleCategs");
     var Categies = colCateg.getElementsByClassName("smallThingies");
@@ -102,6 +158,55 @@ function initCategs() {
         listToBePopulated.appendChild(newNode);
     }
 };
+function initProducts() {
+    var storeContent = document.getElementsByClassName("storeContent")[0];
+    storeContent.innerText = "";
+
+    for (var i = 0; i < products.length; i++) {
+
+        var newCard = document.createElement("div");
+        newCard.classList = "col-md-3 prodCard";
+        var newCardContainer = document.createElement("div");
+        newCardContainer.classList = "prodContainer";
+        var newCardImage = document.createElement("img");
+        var newCardContainerBody = document.createElement("div");
+        newCardContainerBody.classList = "prodContainer-body";
+
+        var newCardTitle = document.createElement("h4");
+        var newCardBrand = document.createElement("p");
+        newCardBrand.classList = "prodBrand";
+        var newCardPrice = document.createElement("p");
+        newCardPrice.classList = "prodPrice";
+
+        var arr = ""+products[i].Image+"";
+        var arr = decode_utf8(arr);
+        console.log(arr.substring(0,40));
+
+        newCardImage.src = "data:image/jpg;base64,"+arr;
+        newCardTitle.innerText = products[i].ProductName;
+        newCardBrand.innerText = products[i].Brand;
+        newCardPrice.innerText = products[i].ProductPrice;
+
+
+        newCard.appendChild(newCardContainer);
+        newCardContainer.appendChild(newCardImage);
+
+
+        newCardContainer.appendChild(newCardContainerBody);
+        newCardContainerBody.appendChild(newCardTitle);
+        newCardContainerBody.appendChild(newCardBrand);
+        newCardContainerBody.appendChild(newCardPrice);
+
+        storeContent.appendChild(newCard);
+    }
+};
+function encode_utf8(s) {
+    return unescape(encodeURIComponent(s));
+}
+
+function decode_utf8(s) {
+    return decodeURIComponent(escape(s));
+}
 
 function FilterToggle(evt) {
     var filterObj = document.getElementById(evt.target.objId)
@@ -123,7 +228,7 @@ function UpdateProducts() {
     var colBrand = document.getElementById("collapsibleBrands");
     var Brandies = colBrand.getElementsByClassName("smallThingies");
     var possibleFilters = Brandies[0].children;
-    
+
     for (var i = 0; i < possibleFilters.length; i++) {
         if (possibleFilters[i].isTriggered) {
             activeBrandFilters.push(possibleFilters[i].innerText);
@@ -139,8 +244,5 @@ function UpdateProducts() {
             activeCategoryFilters.push(possibleFilters[i].innerText);
         }
     }
-
-
-    console.log(activeBrandFilters);
-    console.log(activeCategoryFilters);
+    getProductsFiltered(activeCategoryFilters, activeBrandFilters);
 }

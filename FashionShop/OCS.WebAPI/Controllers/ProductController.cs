@@ -92,11 +92,26 @@ namespace OCS.WebAPI.Controllers
 
         [HttpGet]
         [Route("Filter")]
-        public IHttpActionResult Filter(Category category = null, Brand brand = null)
+        public IHttpActionResult Filter(List<Category> category = null, List<Brand> brand = null)
         {
             try
             {
                 IEnumerable<ProductModel> products = this.productServices.Filter(category, brand);
+                return this.Ok(products);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
+        }
+
+        [HttpGet]
+        [Route("FilteredSearch")]
+        public IHttpActionResult FilteredSearch(string searchString, List<Category> category = null, List<Brand> brand = null)
+        {
+            try
+            {
+                IEnumerable<ProductModel> products = this.productServices.FilteredSearch(searchString,category,brand);
                 return this.Ok(products);
             }
             catch (Exception e)
