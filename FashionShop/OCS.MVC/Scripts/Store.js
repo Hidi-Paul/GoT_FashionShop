@@ -92,17 +92,18 @@ function getProducts() {
 }
 function getProductsFiltered(categoryFilters, brandFilters) {
     var xhr = new XMLHttpRequest();
-    
+    var obj = new Object();
+    obj.category = categoryFilters;
+    obj.brand = brandFilters;
+
     if (searchBar.textContent.length > 0) {
         var searchText = searchBar.textContent;
         xhr.open('GET', serverAddr + 'FilteredSearch'
             + "?" + searchText
-            + "?" + JSON.stringify(categoryFilters)
-            + "?" + JSON.stringify(brandFilters));
+            + "?" + obj);
     } else {
         xhr.open('GET', serverAddr + 'Filter'
-            + "?" + JSON.stringify(categoryFilters)
-            + "?" + JSON.stringify(brandFilters));
+            + "?model=" + JSON.stringify(obj));
     }
     
     xhr.setRequestHeader('Access-Control-Allow-Headers', '*');

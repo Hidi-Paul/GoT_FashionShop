@@ -93,11 +93,11 @@ namespace OCS.WebAPI.Controllers
 
         [HttpGet]
         [Route("Filter")]
-        public IHttpActionResult Filter(List<Category> category = null, List<Brand> brand = null)
+        public IHttpActionResult Filter([FromUri]VM model)
         {
             try
             {
-                IEnumerable<ProductModel> products = this.productServices.Filter(category, brand);
+                IEnumerable<ProductModel> products = this.productServices.Filter(model.category, model.brand);
                 return this.Ok(products);
             }
             catch (Exception e)
@@ -105,14 +105,18 @@ namespace OCS.WebAPI.Controllers
                 return InternalServerError();
             }
         }
+        public class VM {
+            public string[] category { get; set; }
+            public string[] brand { get; set; }
+        }
 
         [HttpGet]
         [Route("FilteredSearch")]
-        public IHttpActionResult FilteredSearch(string searchString, List<Category> category = null, List<Brand> brand = null)
+        public IHttpActionResult FilteredSearch(string searchString, [FromUri]VM model)
         {
             try
             {
-                IEnumerable<ProductModel> products = this.productServices.FilteredSearch(searchString,category,brand);
+                IEnumerable<ProductModel> products = this.productServices.FilteredSearch(searchString,model.category,model.brand);
                 return this.Ok(products);
             }
             catch (Exception e)

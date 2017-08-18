@@ -106,7 +106,7 @@ namespace OCS.BusinessLayer.Services
             return products.Where(p => p.Brand == brand.BrandName);
         }
 
-        public IEnumerable<ProductModel> Filter(List<Category> category, List<Brand> brand)
+        public IEnumerable<ProductModel> Filter(string[] category, string[] brand)
         {
             IEnumerable<Product> products = repository.GetAllProducts();
             IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(products);
@@ -114,18 +114,18 @@ namespace OCS.BusinessLayer.Services
             List<ProductModel> filteredByCateg= new List<ProductModel>();
             if (category != null)
             {
-                foreach(Category filter in category)
+                foreach(string filter in category)
                 {
-                    var results = FilterByCategory(filter, mappedProducts);
+                    var results = FilterByCategory(categoryRepository.GetCategoryByName(filter), mappedProducts);
                     filteredByCateg.AddRange(results);
                 }
             }
             List<ProductModel> filteredByBrand= new List<ProductModel>();
             if (brand != null)
             {
-                foreach (Brand filter in brand)
+                foreach (string filter in brand)
                 {
-                    var results = FilterByBrand(filter, mappedProducts);
+                    var results = FilterByBrand(brandRepository.GetBrandByName(filter), mappedProducts);
                     filteredByBrand.AddRange(results);
                 }
             }
@@ -134,7 +134,7 @@ namespace OCS.BusinessLayer.Services
             
             return filteredProducts;
         }
-        public IEnumerable<ProductModel> FilteredSearch(string searchString, List<Category> category = null, List<Brand> brand = null)
+        public IEnumerable<ProductModel> FilteredSearch(string searchString, string[] category = null, string[] brand = null)
         {
             IEnumerable<ProductModel> filteredProducts;
             if (category == null && brand == null)
