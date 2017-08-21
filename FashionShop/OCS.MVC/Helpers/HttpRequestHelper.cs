@@ -25,7 +25,7 @@ namespace OCS.MVC.Controllers
         }
         public static void SetAuthToken(string token)
         {
-            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token);
+            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",token);
         }
 
         public static async Task<HttpResponseMessage> GetAsync(string url)

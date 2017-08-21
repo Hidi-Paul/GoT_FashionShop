@@ -109,11 +109,11 @@ namespace OCS.MVC.Controllers
 
                         var accessString = GetToken("https://localhost:44384/", model.Email ,model.Password );
 
-                        string  token = JsonConvert.DeserializeObject<Token>(accessString).access_token;
+                        Token token = JsonConvert.DeserializeObject<Token>(accessString);
 
-                        HttpCookie cookie = new HttpCookie("AuthToken")
+                        HttpCookie cookie = new HttpCookie("Token")
                         {
-                            Value = token,
+                            Value = token.access_token,
                             HttpOnly = true,
                             Secure = true
                         };

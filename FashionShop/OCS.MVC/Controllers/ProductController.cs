@@ -28,6 +28,7 @@ using System.Net;
 
 namespace OCS.MVC.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         //ApplicationDbContext db = new ApplicationDbContext();
@@ -43,7 +44,8 @@ namespace OCS.MVC.Controllers
        // GET: Product
         public async Task<ActionResult> Index()
         {
-            var token = HttpContext.Request.Cookies["AuthToken"].Value;
+            var token = HttpContext.Request.Cookies["Token"].Value;
+            
             HttpRequestHelper.SetAuthToken(token);
             var response = await HttpRequestHelper.GetAsync("GetAllProducts");
 
