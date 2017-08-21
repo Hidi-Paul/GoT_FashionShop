@@ -14,16 +14,12 @@ namespace OCS.BusinessLayer.Services
         private readonly IProductRepository repository;
         private readonly IBrandRepository brandRepository;
         private readonly ICategoryRepository categoryRepository;
-        private readonly IColorRepository colorRepository;
-        private readonly IGenderRepository genderRepository;
 
-        public ProductServices(IProductRepository repository, IBrandRepository brandRepository, ICategoryRepository categoryRepository, IColorRepository colorRepository, IGenderRepository genderRepository)
+        public ProductServices(IProductRepository repository, IBrandRepository brandRepository, ICategoryRepository categoryRepository)
         {
             this.repository = repository;
             this.brandRepository = brandRepository;
             this.categoryRepository = categoryRepository;
-            this.colorRepository = colorRepository;
-            this.genderRepository = genderRepository;
         }
 
         public IEnumerable<ProductModel> GetAll()
@@ -62,22 +58,6 @@ namespace OCS.BusinessLayer.Services
                 if (categ != null)
                 {
                     mappedProduct.CategoryID = categ.CategoryID;
-                }
-            }
-            if(productModel.Color != null && productModel.Color.Length > 0)
-            {
-                var color = colorRepository.GetColorByName(productModel.Color);
-                if (color != null)
-                {
-                    mappedProduct.ColorID = color.ColorID;
-                }
-            }
-            if(productModel.Gender != null && productModel.Gender.Length > 0)
-            {
-                var gender = genderRepository.GetGenderByName(productModel.Gender);
-                if (gender != null)
-                {
-                    mappedProduct.GenderID = gender.GenderID;
                 }
             }
             repository.SaveProduct(mappedProduct);

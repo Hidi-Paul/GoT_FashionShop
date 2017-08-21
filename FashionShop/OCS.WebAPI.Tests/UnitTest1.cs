@@ -19,8 +19,6 @@ namespace OCS.WebAPI.Tests
         private Mock<IProductRepository> repo;
         private Mock<IBrandRepository> brandRepo;
         private Mock<ICategoryRepository> categRepo;
-        private Mock<IColorRepository> colorRepo;
-        private Mock<IGenderRepository> genderRepo;
 
         [SetUp]
         public void Init()
@@ -33,10 +31,8 @@ namespace OCS.WebAPI.Tests
 
             brandRepo = new Mock<IBrandRepository>();
             categRepo = new Mock<ICategoryRepository>();
-            colorRepo = new Mock<IColorRepository>();
-            genderRepo = new Mock<IGenderRepository>();
 
-            service = new ProductServices(repo.Object,brandRepo.Object,categRepo.Object,colorRepo.Object,genderRepo.Object);     //We give it the "mocked objects", unity wont inject a repository cuz we'll give it instead
+            service = new ProductServices(repo.Object,brandRepo.Object,categRepo.Object);     //We give it the "mocked objects", unity wont inject a repository cuz we'll give it instead
         }
 
         [Test]

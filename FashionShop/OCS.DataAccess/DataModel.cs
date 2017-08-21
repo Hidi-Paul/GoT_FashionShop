@@ -14,8 +14,6 @@ namespace OCS.DataAccess
 
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Color> Colors { get; set; }
-        public virtual DbSet<Gender> Genders { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 
@@ -27,14 +25,6 @@ namespace OCS.DataAccess
 
             modelBuilder.Entity<Category>()
                 .Property(e => e.CategoryName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Color>()
-                .Property(e => e.ColorName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Gender>()
-                .Property(e => e.GenderName)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Product>()

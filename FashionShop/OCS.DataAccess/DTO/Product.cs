@@ -33,9 +33,6 @@ namespace OCS.DataAccess
 
         public virtual Category Category { get; set; }
 
-        public virtual Color Color { get; set; }
-
-        public virtual Gender Gender { get; set; }
         public string Image { get; set; }
     }
 }
