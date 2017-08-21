@@ -277,7 +277,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="HttpClientController\HttpClientController.cs" />
+    <Compile Include="Helpers\HttpRequestHelper.cs" />
     <Compile Include="Migrations\201708090757579_Init.cs" />
     <Compile Include="Migrations\201708090757579_Init.Designer.cs">
       <DependentUpon>201708090757579_Init.cs</DependentUpon>

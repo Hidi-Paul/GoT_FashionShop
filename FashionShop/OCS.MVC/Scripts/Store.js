@@ -8,31 +8,28 @@ var brandCollapseBtn = document.getElementById("collapsibleBrands");
 var categCollapseBtn = document.getElementById("collapsibleCategs");
 var searchBar = document.getElementById("searchBar");
 
-if (brandCollapseBtn != null) {
+if (brandCollapseBtn !== null) {
     var trigger = brandCollapseBtn.querySelectorAll(".bigThingie")[0];
     var brandCollapsibles = brandCollapseBtn.querySelectorAll(".collapse")[0];
 
     trigger.addEventListener("click", function () {
         $(brandCollapsibles).collapse("toggle"); /*imi recunosc pacatele*/
     });
-}
-if (categCollapseBtn != null) {
+};
+if (categCollapseBtn !== null) {
     var trigger = categCollapseBtn.querySelectorAll(".bigThingie")[0];
     var categCollapsibles = categCollapseBtn.querySelectorAll(".collapse")[0];
 
     trigger.addEventListener("click", function () {
         $(categCollapsibles).collapse("toggle"); /*imi recunosc pacatele*/
     });
-}
-if (searchBar != null) {
+};
+if (searchBar !== null) {
     searchBar.addEventListener("keyup", function () {
         UpdateProducts();
     })
-}
+};
 window.onload = function () {
-    getBrands();
-    getCategs();
-    getProducts();
 };
 
 function readCookie(name) {
@@ -40,8 +37,8 @@ function readCookie(name) {
     var ca = document.cookie.split(';');
     for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
 }
@@ -51,8 +48,8 @@ function getBrands() {
     xhr.open('GET', serverAddr + 'GetAllBrands');
     xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-    xhr.setRequestHeader("Authorization", 'Bearer ' + 'mOQMWWvVsC7LmXSsGIu3GcIcFOmqJxmG0m7YHqLAbOI88qBcarISEOWm_hMs37DytOcmo17spMedmQUswOwi_PnsJoct2lXXOud2f0bjPvS3iY3r4QoJ2oMIwyjci8WKyB2UPWP4a9jU3PcQp0XsD4GeQbqA6HPOL9oRDibc87fEuPGtg8qm7569z2AO_dgTFbQIloe4IP2EErYxha-mbPjdGVYULF-3YnwITiFMQeR7fwNW6J-Cdax7r0QgJdSKd66bCBRuT4uuLGHUPxC6tBzi8lMn6Z0Jlk0OE9X24T5sKvASIjOIAkU5nMa5BPnZr38RzTabTTp6sgi2i_UxzpfiwNiINMpluHZO6P2t339VDKtByDmCqCdnhHpJa7-RDOzGWDXe5s16T-wZ3EFueKNiPqcbCQUZQG5qhOVPMV2foP-dErcsI91z7RHfT9YfOtRtfPHRNDxyOgFXAMeu5lHKbMhNPIrIOxLDKpnIPD9vnDv0gNC3VpA1bmzU6bMExwlez3r_tL6RDSqaftyXXw' ); 
-    
+    xhr.setRequestHeader("Authorization", 'Bearer ' + 'mOQMWWvVsC7LmXSsGIu3GcIcFOmqJxmG0m7YHqLAbOI88qBcarISEOWm_hMs37DytOcmo17spMedmQUswOwi_PnsJoct2lXXOud2f0bjPvS3iY3r4QoJ2oMIwyjci8WKyB2UPWP4a9jU3PcQp0XsD4GeQbqA6HPOL9oRDibc87fEuPGtg8qm7569z2AO_dgTFbQIloe4IP2EErYxha-mbPjdGVYULF-3YnwITiFMQeR7fwNW6J-Cdax7r0QgJdSKd66bCBRuT4uuLGHUPxC6tBzi8lMn6Z0Jlk0OE9X24T5sKvASIjOIAkU5nMa5BPnZr38RzTabTTp6sgi2i_UxzpfiwNiINMpluHZO6P2t339VDKtByDmCqCdnhHpJa7-RDOzGWDXe5s16T-wZ3EFueKNiPqcbCQUZQG5qhOVPMV2foP-dErcsI91z7RHfT9YfOtRtfPHRNDxyOgFXAMeu5lHKbMhNPIrIOxLDKpnIPD9vnDv0gNC3VpA1bmzU6bMExwlez3r_tL6RDSqaftyXXw');
+
     xhr.onload = function () {
         if (xhr.status === 200) {
             //console.log("brands:", xhr.response);
@@ -66,12 +63,12 @@ function getBrands() {
         }
     };
     xhr.send();
-}
+};
 function getCategs() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', serverAddr + 'GetAllCategories');
     xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); 
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhr.onload = function () {
         if (xhr.status === 200) {
             //console.log("categs:", xhr.response);
@@ -84,7 +81,7 @@ function getCategs() {
         }
     };
     xhr.send();
-}
+};
 function getProducts() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', serverAddr + 'GetAllProducts');
@@ -102,7 +99,7 @@ function getProducts() {
         }
     };
     xhr.send();
-}
+};
 function getProductsFiltered(categoryFilters, brandFilters) {
     var xhr = new XMLHttpRequest();
     var obj = new Object();
@@ -118,7 +115,7 @@ function getProductsFiltered(categoryFilters, brandFilters) {
         xhr.open('GET', serverAddr + 'Filter'
             + "?model=" + JSON.stringify(obj));
     }
-    
+
     xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhr.onload = function () {
@@ -133,7 +130,7 @@ function getProductsFiltered(categoryFilters, brandFilters) {
         }
     };
     xhr.send();
-}
+};
 function initBrands() {
     var colBrand = document.getElementById("collapsibleBrands");
     var Brandies = colBrand.getElementsByClassName("smallThingies");
@@ -193,12 +190,12 @@ function initProducts() {
         newCardBrand.classList = "prodBrand";
         var newCardPrice = document.createElement("p");
         newCardPrice.classList = "prodPrice";
-        
+
 
         newCardImage.src = products[i].Image;
         newCardTitle.innerText = products[i].ProductName;
         newCardBrand.innerText = products[i].Brand;
-        newCardPrice.innerText = products[i].ProductPrice+"$";
+        newCardPrice.innerText = products[i].ProductPrice + "$";
 
 
         newCard.appendChild(newCardContainer);
@@ -215,9 +212,6 @@ function initProducts() {
         storeContent.appendChild(newCard);
     }
 };
-function hexToBase64(str) {
-    return btoa(String.fromCharCode.apply(null, str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ")));
-}
 function FilterToggle(evt) {
     var filterObj = document.getElementById(evt.target.objId)
 
@@ -230,7 +224,7 @@ function FilterToggle(evt) {
     }
 
     UpdateProducts();
-}
+};
 function UpdateProducts() {
     var activeBrandFilters = [];
     var activeCategoryFilters = [];
@@ -255,4 +249,4 @@ function UpdateProducts() {
         }
     }
     getProductsFiltered(activeCategoryFilters, activeBrandFilters);
-}
+};

@@ -35,23 +35,29 @@ namespace OCS.MVC.Controllers
         static async Task<List<ProductModel>> GetProductsAsync(string path,HttpClient client)
         {
             List<ProductModel> products = null;
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                products = await response.Content.ReadAsAsync<List<ProductModel>>();
-            }
+            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllProducts");
+            
             return products;
         }
 
        // GET: Product
         public async Task<ActionResult> Index()
         {
-            HttpClientController.HttpClientController clientController = new HttpClientController.HttpClientController(HttpContext.Request.Cookies["Token"].Value);
-            List<ProductModel> products;
-            Uri url = new Uri("https://localhost:44384/GetAllProducts");
-            products = await  GetProductsAsync(url.PathAndQuery,clientController.client);
+            var token = HttpContext.Request.Cookies["AuthToken"].Value;
+            HttpRequestHelper.SetAuthToken(token);
+            var response = await HttpRequestHelper.GetAsync("GetAllProducts");
 
-
+            List<ProductModel> products = null;
+            if (response.IsSuccessStatusCode)
+            {
+                products = await response.Content.ReadAsAsync<List<ProductModel>>();
+            }
+            else
+            {
+                //!HERE!
+                throw new Exception("Why am I here?");
+            }
+            
             return View(products);
         }
 

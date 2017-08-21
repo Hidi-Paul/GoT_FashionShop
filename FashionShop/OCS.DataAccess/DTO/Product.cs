@@ -5,12 +5,18 @@ namespace OCS.DataAccess
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    public enum Gender
+    {
+        Male, Female, Unisex
+    }
+
     [Table("Product")]
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+
         }
         
         [Key]
@@ -20,10 +26,8 @@ namespace OCS.DataAccess
         public string ProductName { get; set; }
 
         public double? ProductPrice { get; set; }
-
-        public Guid? GenderID { get; set; }
-
-        public Guid? ColorID { get; set; }
+        
+        public Gender Gender { get; set; }
 
         public Guid? BrandID { get; set; }
 
