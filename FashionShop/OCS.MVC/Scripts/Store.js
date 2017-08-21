@@ -1,4 +1,4 @@
-﻿var serverAddr = "https://localhost:44300/"
+﻿var serverAddr = "https://localhost:44384/"
 
 var brands;
 var categs;
@@ -71,7 +71,7 @@ function getCategs() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', serverAddr + 'GetAllCategories');
     xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*'); 
     xhr.onload = function () {
         if (xhr.status === 200) {
             //console.log("categs:", xhr.response);
