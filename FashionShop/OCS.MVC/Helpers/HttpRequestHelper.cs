@@ -30,9 +30,10 @@ namespace OCS.MVC.Controllers
         }
 
 
-        public static async Task<HttpResponseMessage> GetAsync(string url)
+        public static async Task<HttpResponseMessage> GetAsync(string url, string param="")
         {
-            var response = await HttpClient.GetAsync(ServerAddr+url);
+            var urlParam = Uri.UnescapeDataString(param);
+            var response = await HttpClient.GetAsync(ServerAddr+url+ urlParam);
             return response;
         }
 
