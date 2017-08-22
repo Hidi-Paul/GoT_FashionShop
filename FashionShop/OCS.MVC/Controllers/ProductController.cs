@@ -70,18 +70,18 @@ namespace OCS.MVC.Controllers
 
         // POST: Filters
         [HttpPost]
-        public ActionResult Filters(FiltersModel model)
+        public async Task<ActionResult> Filters(FiltersModel model)
         {
             var token = HttpContext.Request.Cookies["Token"].Value;
             HttpRequestHelper.SetAuthToken(token);
 
 
-            HttpResponseMessage response = HttpRequestHelper.GetAsync("GetAllProducts");
+            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllProducts");
 
             List<ProductModel> products = new List<ProductModel>();
             if (response.IsSuccessStatusCode)
             {
-                products = response.Content.ReadAsAsync<List<ProductModel>>();
+                products = await response.Content.ReadAsAsync<List<ProductModel>>();
             }
             else
             {
