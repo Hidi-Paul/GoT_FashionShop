@@ -21,9 +21,9 @@ namespace OCS.MVC.Controllers
         public async Task<ActionResult> Index()
         {
             var token = HttpContext.Request.Cookies["Token"].Value;
-            
             HttpRequestHelper.SetAuthToken(token);
-            var response = await HttpRequestHelper.GetAsync("GetAllProducts");
+
+            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllProducts");
 
             List<ProductModel> products = new List<ProductModel>();
             if (response.IsSuccessStatusCode)
@@ -36,6 +36,59 @@ namespace OCS.MVC.Controllers
             }
             
             return View(products);
+        }
+
+        // GET: Filters
+        [HttpGet]
+        public async Task<ActionResult> Filters()
+        {
+            var token = HttpContext.Request.Cookies["Token"].Value;
+            HttpRequestHelper.SetAuthToken(token);
+
+            List<CategoryModel> categs = new List<CategoryModel>();
+            List<BrandModel> brands = new List<BrandModel>();
+
+            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllCategories");
+            if (response.IsSuccessStatusCode)
+            {
+                categs = await response.Content.ReadAsAsync<List<CategoryModel>>();
+            }
+            response = await HttpRequestHelper.GetAsync("GetAllBrands");
+            if (response.IsSuccessStatusCode)
+            {
+                brands = await response.Content.ReadAsAsync<List<BrandModel>>();
+            }
+
+            FiltersModel model = new FiltersModel
+            {
+                Categories = categs,
+                Brands = brands
+            };
+
+            return PartialView(model);
+        }
+
+        // POST: Filters
+        [HttpPost]
+        public ActionResult Filters(FiltersModel model)
+        {
+            var token = HttpContext.Request.Cookies["Token"].Value;
+            HttpRequestHelper.SetAuthToken(token);
+
+
+            HttpResponseMessage response = HttpRequestHelper.GetAsync("GetAllProducts");
+
+            List<ProductModel> products = new List<ProductModel>();
+            if (response.IsSuccessStatusCode)
+            {
+                products = response.Content.ReadAsAsync<List<ProductModel>>();
+            }
+            else
+            {
+                throw new ApplicationException(response.Content.ToString());
+            }
+
+            return View("Index", products);
         }
 
         //// GET: Product/Details/5

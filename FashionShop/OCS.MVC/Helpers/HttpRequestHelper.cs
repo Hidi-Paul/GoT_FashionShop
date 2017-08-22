@@ -28,15 +28,14 @@ namespace OCS.MVC.Controllers
         {
             HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",token);
         }
-
-
+        
         public static async Task<HttpResponseMessage> GetAsync(string url, string param="")
         {
             var urlParam = Uri.UnescapeDataString(param);
             var response = await HttpClient.GetAsync(ServerAddr+url+urlParam);
             return response;
         }
-
+        
         public static async Task<HttpResponseMessage> PostAsync(string url)
         {
             //!HERE!
