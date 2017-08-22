@@ -113,6 +113,7 @@ namespace OCS.MVC.Controllers
 
                         HttpCookie cookie = new HttpCookie("Token")
                         {
+                            Expires = Convert.ToDateTime(token.expires),
                             Value = token.access_token,
                             HttpOnly = true,
                             Secure = true

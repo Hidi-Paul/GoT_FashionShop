@@ -32,8 +32,7 @@ namespace OCS.MVC.Controllers
 
         public static async Task<HttpResponseMessage> GetAsync(string url)
         {
-            HttpClient client = GetClient();
-            var response = await client.GetAsync(ServerAddr+url);
+            var response = await HttpClient.GetAsync(ServerAddr+url);
             return response;
         }
 
