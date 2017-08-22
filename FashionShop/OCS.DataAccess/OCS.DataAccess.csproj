@@ -53,6 +53,7 @@
     <Compile Include="DTO\Category.cs" />
     <Compile Include="DataModel.cs" />
     <Compile Include="DTO\Product.cs" />
+    <Compile Include="Enums\ProductGender.cs" />
     <Compile Include="Migrations\201708210826592_01-Initial-Fix.cs" />
     <Compile Include="Migrations\201708210826592_01-Initial-Fix.Designer.cs">
       <DependentUpon>201708210826592_01-Initial-Fix.cs</DependentUpon>

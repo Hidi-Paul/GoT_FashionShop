@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<OCS.MVC.Models.ProductModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Shop Index";
 }
 
 <h2>Index</h2>
@@ -23,9 +23,11 @@
                 </div>
                 <div class="panel-collapse collapse">
                     <ul class="list-group smallThingies">
+                        
                     </ul>
                 </div>
             </div>
+
             @*Categories*@
             <div id="collapsibleCategs" class="panel panel-default collapsibleThingie">
                 <div class="panel-heading bigThingie">
@@ -34,14 +36,30 @@
                     </h4>
                 </div>
                 <div class="panel-collapse collapse">
-                    <ul class="list-group smallThingies">
-                    </ul>
+                    <ul class="list-group smallThingies"></ul>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="col-md-10 storeContent">
-    </div>
+        @foreach (var prod in Model)
+        {
+            <div class="col-md-3 prodCard">
+                <div class="prodContainer">
 
+                    <div class="imgContainer">
+                        <img src="@prod.Image" />
+                    </div>
+
+                    <div class="prodContainer-body">
+                        <h4>@prod.ProductName</h4>
+                        <p class="prodBrand">@prod.Brand</p>
+                        <p class="prodPrice">@prod.ProductPrice$</p>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
 </div>

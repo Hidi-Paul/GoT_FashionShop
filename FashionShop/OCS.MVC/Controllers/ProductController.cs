@@ -10,37 +10,13 @@ using OCS.MVC.Models;
 using Microsoft.AspNet.Identity;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Net.Http;
-using System.Net.Http.Headers;
-
-using Newtonsoft.Json;
-using System.Net;
-
+using System.Web.Script.Serialization;
 
 namespace OCS.MVC.Controllers
 {
     [Authorize]
     public class ProductController : Controller
     {
-        //ApplicationDbContext db = new ApplicationDbContext();
-
-        static async Task<List<ProductModel>> GetProductsAsync(string path,HttpClient client)
-        {
-            List<ProductModel> products = null;
-            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllProducts");
-            
-            return products;
-        }
-
        // GET: Product
         public async Task<ActionResult> Index()
         {
@@ -49,15 +25,14 @@ namespace OCS.MVC.Controllers
             HttpRequestHelper.SetAuthToken(token);
             var response = await HttpRequestHelper.GetAsync("GetAllProducts");
 
-            List<ProductModel> products = null;
+            List<ProductModel> products = new List<ProductModel>();
             if (response.IsSuccessStatusCode)
             {
                 products = await response.Content.ReadAsAsync<List<ProductModel>>();
             }
             else
             {
-                //!HERE!
-                throw new Exception("Why am I here?");
+                throw new ApplicationException(response.Content.ToString());
             }
             
             return View(products);
