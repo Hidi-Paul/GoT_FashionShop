@@ -11,8 +11,9 @@ namespace OCS.WebAPI.Controllers
 
 {
 
-    [EnableCors("*", "*", "*")]
     [Authorize]
+    [EnableCors("*", "*", "*")]
+    [System.Web.Mvc.RequireHttps]
     public class ProductController : ApiController
     {
         public ProductController() : base()
@@ -37,22 +38,30 @@ namespace OCS.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return this.InternalServerError();
+                return this.InternalServerError(e);
             }
         }
 
         [HttpGet]
         [Route("GetProductByID")]
-        public IHttpActionResult GetProductById(Guid id)
+        public IHttpActionResult GetProductById(Guid? id)
         {
+            if (id == null)
+            {
+                return BadRequest("Please specify the product Id");
+            }
             try
             {
-                ProductModel product = this.productServices.GetByID(id);
-                return this.Ok(product);
+                ProductModel product = this.productServices.GetByID((Guid)id);
+                if (product != null)
+                {
+                    return this.Ok(product);
+                }
+                return this.NotFound();
             }
             catch (Exception e)
             {
-                return this.InternalServerError();
+                return this.InternalServerError(e);
             }
         }
 
@@ -60,6 +69,7 @@ namespace OCS.WebAPI.Controllers
         [Route("PostProduct")]
         public IHttpActionResult PostProduct([FromBody] ProductModel product)
         {
+            //!HERE!
             if (!ModelState.IsValid)
             {
                 return BadRequest("Invalid data.");
@@ -73,7 +83,7 @@ namespace OCS.WebAPI.Controllers
                 }
                 catch (Exception e)
                 {
-                    return InternalServerError();
+                    return InternalServerError(e);
                 }
             }
         }
@@ -89,7 +99,7 @@ namespace OCS.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return InternalServerError();
+                return InternalServerError(e);
             }
         }
 
@@ -104,9 +114,10 @@ namespace OCS.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return InternalServerError();
+                return InternalServerError(e);
             }
         }
+
         public class VM {
             public string[] category { get; set; }
             public string[] brand { get; set; }
@@ -123,7 +134,7 @@ namespace OCS.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return InternalServerError();
+                return InternalServerError(e);
             }
         }
     }

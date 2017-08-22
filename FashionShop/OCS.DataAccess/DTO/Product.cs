@@ -7,7 +7,7 @@ namespace OCS.DataAccess
 
     public enum Gender
     {
-        Male, Female, Unisex
+        Unisex, Male, Female
     }
 
     [Table("Product")]

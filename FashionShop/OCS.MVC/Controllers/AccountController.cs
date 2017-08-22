@@ -110,7 +110,7 @@ namespace OCS.MVC.Controllers
                         var accessString = GetToken("https://localhost:44384/", model.Email ,model.Password );
 
                         Token token = JsonConvert.DeserializeObject<Token>(accessString);
-
+                        //!TOKEN!
                         HttpCookie cookie = new HttpCookie("Token")
                         {
                             Expires = Convert.ToDateTime(token.expires),

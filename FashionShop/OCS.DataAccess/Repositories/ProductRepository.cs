@@ -11,10 +11,9 @@ namespace OCS.DataAccess.Repositories
         {
             using (DataModel db = new DataModel())
             {
-                var products = db.Products.Include("Gender")
-                                            .Include("Category")
-                                            .Include("Brand")
-                                            .Include("Color").Select(x => x).ToList();
+                var products = db.Products.Include("Category")
+                                          .Include("Brand")
+                                          .Select(x => x).ToList();
                 return products;
             }
         }
@@ -24,10 +23,9 @@ namespace OCS.DataAccess.Repositories
             using (DataModel db = new DataModel())
             {
                 Product myProduct = new Product();
-                var products = db.Products.Include("Gender")
-                                            .Include("Category")
-                                            .Include("Brand")
-                                            .Include("Color").Select(x => x).ToList();
+                var products = db.Products.Include("Category")
+                                          .Include("Brand")
+                                          .Select(x => x).ToList();
                 myProduct = products.Where(x => x.ProductID == id).FirstOrDefault();
                 return myProduct;
             }

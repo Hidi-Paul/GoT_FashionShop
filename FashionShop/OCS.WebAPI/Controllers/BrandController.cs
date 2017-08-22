@@ -10,6 +10,7 @@ using System.Web.Http.Cors;
 
 namespace OCS.WebAPI.Controllers
 {
+    [Authorize]
     [EnableCors("*", "*", "*")]
     [System.Web.Mvc.RequireHttps]
     public class BrandController : ApiController
@@ -32,7 +33,7 @@ namespace OCS.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return this.InternalServerError();
+                return this.InternalServerError(e);
             }
         }
     }
