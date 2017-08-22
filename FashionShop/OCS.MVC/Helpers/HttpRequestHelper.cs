@@ -11,8 +11,8 @@ namespace OCS.MVC.Controllers
     public static class HttpRequestHelper
     {
         private static string ServerAddr { get; set; } = "https://localhost:44384/";
-
         private static HttpClient HttpClient { get; set; } = GetClient();
+
 
         private static HttpClient GetClient()
         {
@@ -23,19 +23,20 @@ namespace OCS.MVC.Controllers
             
             return HttpClient;
         }
+
         public static void SetAuthToken(string token)
         {
             HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",token);
         }
 
+
         public static async Task<HttpResponseMessage> GetAsync(string url)
         {
             HttpClient client = GetClient();
-
             var response = await client.GetAsync(ServerAddr+url);
-
             return response;
         }
+
         public static async Task<HttpResponseMessage> PostAsync(string url)
         {
             //!HERE!
