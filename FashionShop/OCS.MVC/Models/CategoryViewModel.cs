@@ -5,7 +5,7 @@ using System.Web;
 
 namespace OCS.MVC.Models
 {
-    public class BrandModel
+    public class CategoryViewModel
     {
         public string Name { get; set; }
     }

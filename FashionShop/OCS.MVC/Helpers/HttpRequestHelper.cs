@@ -1,18 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.IdentityModel.Tokens;
 using System.Threading.Tasks;
 
 namespace OCS.MVC.Controllers
 {
     public static class HttpRequestHelper
     {
-        private static string ServerAddr { get; set; } = "https://localhost:44384/";
-        private static HttpClient HttpClient { get; set; } = GetClient();
-
+        private static string ServerAddr => ConfigurationManager.AppSettings["base-url"];
+        private static string Token { get; set; } = "";
 
         private static HttpClient GetClient()
         {
@@ -20,19 +17,25 @@ namespace OCS.MVC.Controllers
 
             HttpClient.DefaultRequestHeaders.Accept.Clear();
             HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
+
+            if (Token.Length > 0)
+            {
+                HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+            }
+
             return HttpClient;
         }
 
         public static void SetAuthToken(string token)
         {
-            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",token);
+            Token = token;
         }
         
         public static async Task<HttpResponseMessage> GetAsync(string url, string param="")
         {
+            HttpClient client = GetClient();
             var urlParam = Uri.UnescapeDataString(param);
-            var response = await HttpClient.GetAsync(ServerAddr+url+urlParam);
+            var response = await client.GetAsync( $"{ServerAddr}{url}{urlParam}");
             return response;
         }
         

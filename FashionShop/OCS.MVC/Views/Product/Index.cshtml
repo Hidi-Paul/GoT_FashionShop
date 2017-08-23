@@ -1,18 +1,14 @@
-﻿@model IEnumerable<OCS.MVC.Models.ProductModel>
+﻿@model OCS.MVC.Models.ProductsPageViewModel
 
 @{
     ViewBag.Title = "Shop Index";
 }
-
-<h2>Index</h2>
-
-
 <div class="storeContainer">
     
-    @*@{await Html.RenderAction("Filters", "Product")}*@
+    @{ Html.RenderPartial("FiltersPartial", Model.FiltersViewModel);}
 
     <div class="col-md-10 storeContent">
-        @foreach (var prod in Model)
+        @foreach (var prod in Model.Products)
         {
             <div class="col-md-3 prodCard">
                 <div class="prodContainer">

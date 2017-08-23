@@ -69,7 +69,6 @@
     <Compile Include="BusinessLogic\BrandServicesUnitTests.cs" />
     <Compile Include="BusinessLogic\ProductServicesUnitTests.cs" />
     <Compile Include="BusinessLogic\CategortServicesUnitTests.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

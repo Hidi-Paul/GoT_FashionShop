@@ -7,26 +7,26 @@ namespace OCS.BusinessLayer.Models
     {
         public Guid ProductID { get; set; }
 
-        [Required(AllowEmptyStrings =false, ErrorMessage ="Product Name required")]
-        [StringLength(50,ErrorMessage ="Product Name is too long!")]
+        [Required(AllowEmptyStrings =false)]
+        [StringLength(50)]
         public string ProductName { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage ="Price is mandatory")]
-        [Range(0,9999,ErrorMessage ="Invalid Price Range!")]
+        [Required(AllowEmptyStrings = false)]
+        [Range(0,9999)]
         public double ProductPrice { get; set; }
 
         [StringLength(10)]
         public string Gender { get; set; }
         
-        [Required(AllowEmptyStrings = false, ErrorMessage ="Brand is mandatory")]
+        [Required(AllowEmptyStrings = false)]
         [StringLength(50)]
         public string Brand { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage ="Category is mandatory")]
+        [Required(AllowEmptyStrings = false)]
         [StringLength(50)]
         public string Category { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please add an image.")]
+        [Required(AllowEmptyStrings = false)]
         [StringLength(200)]
         public string Image { get; set; }
         

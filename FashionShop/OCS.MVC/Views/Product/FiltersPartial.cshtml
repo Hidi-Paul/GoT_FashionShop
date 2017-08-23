@@ -1,16 +1,16 @@
-﻿@model OCS.MVC.Models.FiltersModel
+﻿@model OCS.MVC.Models.FiltersViewModel
 
-<div>
+<div id="StoreFiltersBar">
     <div class="col-md-2 storeLeftBar">
         <div class="searchContainer">
             <input id="searchBar" type="text" value="@Model.SearchString" />
         </div>
-        <div class="panel-group">
-            @*Brand*@
+        <div class="panel-group">            
+            @*Categories*@
             <div id="collapsibleBrands" class="panel panel-default collapsibleThingie">
                 <div class="panel-heading bigThingie">
                     <h4 class="panel-title">
-                        <a>Brand</a>
+                        <a>Category</a>
                     </h4>
                 </div>
                 <div class="panel-collapse collapse">
@@ -21,13 +21,12 @@
                         }
                     </ul>
                 </div>
-            </div>
-            
-            @*Categories*@
+            </div>            
+            @*Brand*@
             <div id="collapsibleCategs" class="panel panel-default collapsibleThingie">
                 <div class="panel-heading bigThingie">
                     <h4 class="panel-title">
-                        <a>Category</a>
+                        <a>Brand</a>
                     </h4>
                 </div>
                 <div class="panel-collapse collapse">
@@ -42,3 +41,5 @@
         </div>
     </div>
 </div>
+
+@Scripts.Render("~/bundles/FilterPartial");

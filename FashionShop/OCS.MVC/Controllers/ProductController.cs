@@ -17,25 +17,29 @@ namespace OCS.MVC.Controllers
     [Authorize]
     public class ProductController : Controller
     {
-       // GET: Product
+        // GET: Product
         public async Task<ActionResult> Index()
         {
             var token = HttpContext.Request.Cookies["Token"].Value;
             HttpRequestHelper.SetAuthToken(token);
 
-            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllProducts");
+            IEnumerable<ProductViewModel> products = await GetProducts();
+            IEnumerable<CategoryViewModel> categories = await GetCategories();
+            IEnumerable<BrandViewModel> brands = await GetBrands();
 
-            List<ProductModel> products = new List<ProductModel>();
-            if (response.IsSuccessStatusCode)
+            var filtersViewModel = new FiltersViewModel()
             {
-                products = await response.Content.ReadAsAsync<List<ProductModel>>();
-            }
-            else
+                SearchString = "",
+                Categories = categories,
+                Brands = brands
+            };
+            var productsPageViewModel = new ProductsPageViewModel()
             {
-                throw new ApplicationException(response.Content.ToString());
-            }
-            
-            return View(products);
+                FiltersViewModel = filtersViewModel,
+                Products = products
+            };
+
+            return View(productsPageViewModel);
         }
 
         // GET: Filters
@@ -45,21 +49,21 @@ namespace OCS.MVC.Controllers
             var token = HttpContext.Request.Cookies["Token"].Value;
             HttpRequestHelper.SetAuthToken(token);
 
-            List<CategoryModel> categs = new List<CategoryModel>();
-            List<BrandModel> brands = new List<BrandModel>();
+            List<CategoryViewModel> categs = new List<CategoryViewModel>();
+            List<BrandViewModel> brands = new List<BrandViewModel>();
 
             HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllCategories");
             if (response.IsSuccessStatusCode)
             {
-                categs = await response.Content.ReadAsAsync<List<CategoryModel>>();
+                categs = await response.Content.ReadAsAsync<List<CategoryViewModel>>();
             }
             response = await HttpRequestHelper.GetAsync("GetAllBrands");
             if (response.IsSuccessStatusCode)
             {
-                brands = await response.Content.ReadAsAsync<List<BrandModel>>();
+                brands = await response.Content.ReadAsAsync<List<BrandViewModel>>();
             }
 
-            FiltersModel model = new FiltersModel
+            FiltersViewModel model = new FiltersViewModel
             {
                 Categories = categs,
                 Brands = brands
@@ -70,7 +74,7 @@ namespace OCS.MVC.Controllers
 
         // POST: Filters
         [HttpPost]
-        public async Task<ActionResult> Filters(FiltersModel model)
+        public async Task<ActionResult> Filters(FiltersViewModel model)
         {
             var token = HttpContext.Request.Cookies["Token"].Value;
             HttpRequestHelper.SetAuthToken(token);
@@ -78,10 +82,10 @@ namespace OCS.MVC.Controllers
 
             HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllProducts");
 
-            List<ProductModel> products = new List<ProductModel>();
+            List<ProductViewModel> products = new List<ProductViewModel>();
             if (response.IsSuccessStatusCode)
             {
-                products = await response.Content.ReadAsAsync<List<ProductModel>>();
+                products = await response.Content.ReadAsAsync<List<ProductViewModel>>();
             }
             else
             {
@@ -91,6 +95,50 @@ namespace OCS.MVC.Controllers
             return View("Index", products);
         }
 
+        #region HttpClientCallers
+        public async Task<IEnumerable<ProductViewModel>> GetProducts()
+        {
+            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllProducts");
+            List<ProductViewModel> products = new List<ProductViewModel>();
+            if (response.IsSuccessStatusCode)
+            {
+                products = await response.Content.ReadAsAsync<List<ProductViewModel>>();
+            }
+            else
+            {
+                throw new ApplicationException(response.Content.ToString());
+            }
+            return products;
+        }
+        public async Task<IEnumerable<CategoryViewModel>> GetCategories()
+        {
+            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllCategories");
+            List<CategoryViewModel> categories = new List<CategoryViewModel>();
+            if (response.IsSuccessStatusCode)
+            {
+                categories = await response.Content.ReadAsAsync<List<CategoryViewModel>>();
+            }
+            else
+            {
+                throw new ApplicationException(response.Content.ToString());
+            }
+            return categories;
+        }
+        public async Task<IEnumerable<BrandViewModel>> GetBrands()
+        {
+            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllBrands");
+            List<BrandViewModel> brands = new List<BrandViewModel>();
+            if (response.IsSuccessStatusCode)
+            {
+                brands = await response.Content.ReadAsAsync<List<BrandViewModel>>();
+            }
+            else
+            {
+                throw new ApplicationException(response.Content.ToString());
+            }
+            return brands;
+        }
+        #endregion HttpClientCallers
         //// GET: Product/Details/5
         //public ActionResult Details(Guid? id)
         //{

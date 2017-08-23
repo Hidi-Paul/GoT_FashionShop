@@ -54,13 +54,9 @@
     <Compile Include="DataModel.cs" />
     <Compile Include="DTO\Product.cs" />
     <Compile Include="Enums\Gender.cs" />
-    <Compile Include="Migrations\201708210826592_01-Initial-Fix.cs" />
-    <Compile Include="Migrations\201708210826592_01-Initial-Fix.Designer.cs">
-      <DependentUpon>201708210826592_01-Initial-Fix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708220809038_02-Ver0.01.cs" />
-    <Compile Include="Migrations\201708220809038_02-Ver0.01.Designer.cs">
-      <DependentUpon>201708220809038_02-Ver0.01.cs</DependentUpon>
+    <Compile Include="Migrations\201708231041408_01-Initial.cs" />
+    <Compile Include="Migrations\201708231041408_01-Initial.Designer.cs">
+      <DependentUpon>201708231041408_01-Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,11 +72,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708210826592_01-Initial-Fix.resx">
-      <DependentUpon>201708210826592_01-Initial-Fix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708220809038_02-Ver0.01.resx">
-      <DependentUpon>201708220809038_02-Ver0.01.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708231041408_01-Initial.resx">
+      <DependentUpon>201708231041408_01-Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

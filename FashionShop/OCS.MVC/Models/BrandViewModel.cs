@@ -5,8 +5,8 @@ using System.Web;
 
 namespace OCS.MVC.Models
 {
-    public class CategoriesViewModel
+    public class BrandViewModel
     {
-        public List<string> Categories { get; set; }
+        public string Name { get; set; }
     }
 }
