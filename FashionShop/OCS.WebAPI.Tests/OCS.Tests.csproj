@@ -66,6 +66,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\BrandServicesUnitTests.cs" />
+    <Compile Include="BusinessLogic\ProductServicesUnitTests.cs" />
+    <Compile Include="BusinessLogic\CategortServicesUnitTests.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -88,7 +91,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BusinessLogic\" />
     <Folder Include="DataAccess\" />
     <Folder Include="MVC\" />
     <Folder Include="WebAPI\" />

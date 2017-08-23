@@ -15,7 +15,7 @@ namespace OCS.DataAccess
         [StringLength(50)]
         public string ProductName { get; set; }
 
-        public double? ProductPrice { get; set; }
+        public double ProductPrice { get; set; }
         
         public Gender Gender { get; set; }
 

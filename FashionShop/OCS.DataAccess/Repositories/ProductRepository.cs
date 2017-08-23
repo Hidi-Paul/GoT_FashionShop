@@ -22,12 +22,10 @@ namespace OCS.DataAccess.Repositories
         {
             using (DataModel db = new DataModel())
             {
-                Product myProduct = new Product();
-                var products = db.Products.Include("Category")
-                                          .Include("Brand")
-                                          .Select(x => x).ToList();
-                myProduct = products.Where(x => x.ProductID == id).FirstOrDefault();
-                return myProduct;
+                var prod = db.Products.Include("Category")
+                                      .Include("Brand")
+                                      .FirstOrDefault(x => x.ProductID == id);
+                return prod;
             }
         }
 
