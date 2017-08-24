@@ -79,11 +79,10 @@ function RefreshProducts() {
             //console.log(options[i].innerHTML);
         }
     }
-    console.log("Searching \"" + searchBar.textContent + "\"");
-    console.log("Brands: ", BrandFilters);
-    console.log("Categories: ", CategoryFilters);
-
-    FilterProducts(searchBar.textContent, CategoryFilters, BrandFilters);
+    //console.log("Searching \"" + searchBar.textContent + "\"");
+    //console.log("Brands: ", BrandFilters);
+    //console.log("Categories: ", CategoryFilters);
+    FilterProducts(searchBar.value, CategoryFilters, BrandFilters);
 };
 
 var baseUrl = "https://localhost:44358/"
@@ -91,27 +90,35 @@ function FilterProducts(searchText, categories, brands) {
     var xhr = new XMLHttpRequest();
     
 
-    if (searchText==null) {
+    if (searchText===null) {
         searchText = "";
     } 
 
     var obj = new Object();
+    
+    obj.SearchString = searchText
+    obj.Categories = [];
+    for (var i = 0; i < categories.length;i++) {
+        obj.Categories.push({ Name: categories[i] });
+    }
 
-    obj.searchText = searchText
-    obj.category = categories;
-    obj.brand = brands;
+    obj.Brands = [];
+    for (i = 0; i < brands.length; i++) {
+        obj.Brands.push({ Name: brands[i] });
+    }
 
     obj = JSON.stringify(obj);
     console.log("Param", obj)
 
-    xhr.open('Post', baseUrl + 'Filters');
+    xhr.open('POST', baseUrl + 'Product/ProductListPartial');
 
     xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            console.log("Response:",xhr.response);
+            
         }
         else {
             alert('Filter Products Request failed.  Returned status of ' + xhr.status);
