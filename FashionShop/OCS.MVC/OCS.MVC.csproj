@@ -360,6 +360,7 @@
     <Content Include="Views\Account\Denied.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\FiltersPartial.cshtml" />
+    <Content Include="Views\Product\ProductListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,27 +4,11 @@
     ViewBag.Title = "Shop Index";
 }
 <div class="storeContainer">
-    
-    @{ Html.RenderPartial("FiltersPartial", Model.FiltersViewModel);}
+    <div id="StoreFiltersBar">
+        @{ Html.RenderPartial("FiltersPartial", Model.FiltersViewModel);}
+    </div>
 
-    <div class="col-md-10 storeContent">
-        @foreach (var prod in Model.Products)
-        {
-            <div class="col-md-3 prodCard">
-                <div class="prodContainer">
-
-                    <div class="imgContainer">
-                        <img src="@prod.Image" />
-                    </div>
-
-                    <div class="prodContainer-body">
-                        <h4>@prod.ProductName</h4>
-                        <p class="prodBrand">@prod.Brand</p>
-                        <p class="prodPrice">@prod.ProductPrice$</p>
-                    </div>
-
-                </div>
-            </div>
-        }
+    <div class="ProductGrid col-md-10">
+        @{ Html.RenderPartial("ProductListPartial", Model.Products);}
     </div>
 </div>

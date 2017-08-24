@@ -82,7 +82,43 @@ function RefreshProducts() {
     console.log("Searching \"" + searchBar.textContent + "\"");
     console.log("Brands: ", BrandFilters);
     console.log("Categories: ", CategoryFilters);
+
+    FilterProducts(searchBar.textContent, CategoryFilters, BrandFilters);
 };
+
+var baseUrl = "https://localhost:44358/"
+function FilterProducts(searchText, categories, brands) {
+    var xhr = new XMLHttpRequest();
+    
+
+    if (searchText==null) {
+        searchText = "";
+    } 
+
+    var obj = new Object();
+
+    obj.searchText = searchText
+    obj.category = categories;
+    obj.brand = brands;
+
+    obj = JSON.stringify(obj);
+    console.log("Param", obj)
+
+    xhr.open('Post', baseUrl + 'Filters');
+
+    xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            console.log("Response:",xhr.response);
+        }
+        else {
+            alert('Filter Products Request failed.  Returned status of ' + xhr.status);
+        }
+    };
+    xhr.send(obj);
+}
 
 //This one initializes everything related to the filters
 function initFilterBar() {

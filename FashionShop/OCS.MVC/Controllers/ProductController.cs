@@ -42,36 +42,30 @@ namespace OCS.MVC.Controllers
             return View(productsPageViewModel);
         }
 
-        // GET: Filters
-        [HttpGet]
-        public async Task<ActionResult> Filters()
+        // GET: Filtered Results
+        [HttpPost]
+        public async Task<ActionResult> ProductListPartial(FiltersViewModel model)
         {
             var token = HttpContext.Request.Cookies["Token"].Value;
             HttpRequestHelper.SetAuthToken(token);
 
-            List<CategoryViewModel> categs = new List<CategoryViewModel>();
-            List<BrandViewModel> brands = new List<BrandViewModel>();
 
-            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllCategories");
+
+            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllProducts");
+
+            List<ProductViewModel> products = new List<ProductViewModel>();
             if (response.IsSuccessStatusCode)
             {
-                categs = await response.Content.ReadAsAsync<List<CategoryViewModel>>();
+                products = await response.Content.ReadAsAsync<List<ProductViewModel>>();
             }
-            response = await HttpRequestHelper.GetAsync("GetAllBrands");
-            if (response.IsSuccessStatusCode)
+            else
             {
-                brands = await response.Content.ReadAsAsync<List<BrandViewModel>>();
+                throw new ApplicationException(response.Content.ToString());
             }
 
-            FiltersViewModel model = new FiltersViewModel
-            {
-                Categories = categs,
-                Brands = brands
-            };
-
-            return PartialView(model);
+            return PartialView("ProductListPartial", products);
         }
-
+        
         // POST: Filters
         [HttpPost]
         public async Task<ActionResult> Filters(FiltersViewModel model)
