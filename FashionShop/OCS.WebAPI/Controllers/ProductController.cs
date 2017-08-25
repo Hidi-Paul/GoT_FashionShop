@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using System.Web;
 using System.Web.Http.Cors;
+using System.Web.Script.Serialization;
 
 namespace OCS.WebAPI.Controllers
 
@@ -89,27 +90,21 @@ namespace OCS.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("Search")]
-        public IHttpActionResult Search(string searchString)
-        {
-            try
-            {
-                IEnumerable<ProductModel> products = this.productServices.SearchProduct(searchString);
-                return this.Ok(products);
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
-        }
-
-        [HttpGet]
         [Route("Filter")]
-        public IHttpActionResult Filter([FromUri]VM model)
+        public IHttpActionResult GetFiltered([FromUri]string urlParams)
         {
             try
             {
-                IEnumerable<ProductModel> products = this.productServices.Filter(model.category, model.brand);
+                var model= new JavaScriptSerializer().Deserialize<FiltersViewModel>(urlParams);
+                IEnumerable<ProductModel> products;
+                if (model.Brands == null && model.Categories == null && model.SearchString == null)
+                {
+                    products = this.productServices.GetAll();
+                }
+                else
+                {
+                    products = this.productServices.FilteredSearch(model.SearchString, model.Categories, model.Brands);
+                }
                 return this.Ok(products);
             }
             catch (Exception e)
@@ -118,24 +113,12 @@ namespace OCS.WebAPI.Controllers
             }
         }
 
-        public class VM {
-            public string[] category { get; set; }
-            public string[] brand { get; set; }
-        }
-
-        [HttpGet]
-        [Route("FilteredSearch")]
-        public IHttpActionResult FilteredSearch(string searchString, [FromUri]VM model)
+        public class FiltersViewModel
         {
-            try
-            {
-                IEnumerable<ProductModel> products = this.productServices.FilteredSearch(searchString,model.category,model.brand);
-                return this.Ok(products);
-            }
-            catch (Exception e)
-            {
-                return InternalServerError(e);
-            }
+            public string SearchString { get; set; }
+            public IEnumerable<CategoryModel> Categories { get; set; }
+            public IEnumerable<BrandModel> Brands { get; set; }
         }
+        
     }
 }

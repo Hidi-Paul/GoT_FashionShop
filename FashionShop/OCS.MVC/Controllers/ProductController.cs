@@ -5,6 +5,8 @@ using OCS.MVC.Models;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Web.Http;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace OCS.MVC.Controllers
 {
@@ -36,16 +38,16 @@ namespace OCS.MVC.Controllers
             return View(productsPageViewModel);
         }
 
-        // GET: Filtered Results
+        // POST: Filtered Results
         [HttpPost]
         public async Task<ActionResult> ProductListPartial(FiltersViewModel model)
         {
             var token = HttpContext.Request.Cookies["Token"].Value;
             HttpRequestHelper.SetAuthToken(token);
 
-
-
-            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllProducts");
+            var param = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            var paramValue = param.ReadAsStringAsync().Result;
+            HttpResponseMessage response = await HttpRequestHelper.GetAsync("Filter",paramValue);
 
             List<ProductViewModel> products = new List<ProductViewModel>();
             if (response.IsSuccessStatusCode)
@@ -60,28 +62,6 @@ namespace OCS.MVC.Controllers
             return PartialView("ProductListPartial", products);
         }
         
-        // POST: Filters
-        [HttpPost]
-        public async Task<ActionResult> Filters(FiltersViewModel model)
-        {
-            var token = HttpContext.Request.Cookies["Token"].Value;
-            HttpRequestHelper.SetAuthToken(token);
-
-
-            HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllProducts");
-
-            List<ProductViewModel> products = new List<ProductViewModel>();
-            if (response.IsSuccessStatusCode)
-            {
-                products = await response.Content.ReadAsAsync<List<ProductViewModel>>();
-            }
-            else
-            {
-                throw new ApplicationException(response.Content.ToString());
-            }
-
-            return View("Index", products);
-        }
 
         #region HttpClientCallers
         public async Task<IEnumerable<ProductViewModel>> GetProducts()

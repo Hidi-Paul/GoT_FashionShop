@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.Text;
+using OCS.BusinessLayer.Services.Filters;
 
 namespace OCS.BusinessLayer.Services
 {
@@ -59,72 +60,33 @@ namespace OCS.BusinessLayer.Services
 
             repository.SaveProduct(mappedProduct);
         }
-
-        public IEnumerable<ProductModel> SearchProduct(string searchString)
+        
+        public IEnumerable<ProductModel> FilteredSearch(string searchString, IEnumerable<CategoryModel> categories = null, IEnumerable<BrandModel> brands = null)
         {
-            IEnumerable<Product> products = repository.GetAllProducts();
-
-            if (!String.IsNullOrEmpty(searchString))
+            IEnumerable<Product> products = repository.GetAllProducts().ToList();
+            AbstractFilter filter=new AbstractFilter();
+            if (searchString!=null)
             {
-                products = products.Where(s => s.ProductName.ToUpper().Contains(searchString.ToUpper())).ToList();
+                filter = new NameSearchStringFilter(products, searchString, filter);
             }
-
-            IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(products);
-
-            return mappedProducts;
-        }
-
-        public IEnumerable<Product> FilterByCategory(Category category, IEnumerable<Product> products)
-        {
-            return products.Where(p => p.Category.CategoryName == category.CategoryName);
-        }
-
-        public IEnumerable<Product> FilterByBrand(Brand brand, IEnumerable<Product> products)
-        {
-            return products.Where(p => p.Brand.BrandName == brand.BrandName);
-        }
-
-        public IEnumerable<ProductModel> Filter(string[] category, string[] brand)
-        {
-            IEnumerable<Product> products = repository.GetAllProducts();
-
-            List<Product> filteredByCateg = new List<Product>();
-            if (category != null)
+            if (categories != null)
             {
-                foreach (string filter in category)
+                foreach(var categ in categories)
                 {
-                    var results = FilterByCategory(categoryRepository.GetCategoryByName(filter), products);
-                    filteredByCateg.AddRange(results);
+                    filter = new CategoryFilter(products, categ.Name, filter);
                 }
             }
-            List<Product> filteredByBrand = new List<Product>();
-            if (brand != null)
+            if (brands != null)
             {
-                foreach (string filter in brand)
+                foreach(var brand in brands)
                 {
-                    var results = FilterByBrand(brandRepository.GetBrandByName(filter), products);
-                    filteredByBrand.AddRange(results);
+                    filter = new BrandFilter(products, brand.Name, filter);
                 }
             }
-
-            IEnumerable<Product> filteredProducts = filteredByBrand.Intersect(filteredByCateg);
-            IEnumerable<ProductModel> mappedProducts = Mapper.Map<IEnumerable<ProductModel>>(filteredProducts);
-
-            return mappedProducts;
-        }
-        public IEnumerable<ProductModel> FilteredSearch(string searchString, string[] category = null, string[] brand = null)
-        {
-            IEnumerable<ProductModel> filteredProducts;
-            if (category == null && brand == null)
-            {
-                filteredProducts = SearchProduct(searchString);
-            }
-            else
-            {
-                filteredProducts = Filter(category, brand);
-                filteredProducts = filteredProducts.Where(p => p.ProductName.Contains(searchString));
-            }
-            return filteredProducts;
+            FilterResult result = filter.Resolve();
+            var filteredProducts = result.Result();
+            Mapper.Map<IEnumerable<ProductModel>>(filteredProducts);
+            return Mapper.Map<IEnumerable<ProductModel>>(filteredProducts);
         }
     }
 }

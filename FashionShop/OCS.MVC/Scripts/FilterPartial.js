@@ -118,7 +118,9 @@ function FilterProducts(searchText, categories, brands) {
 
     xhr.onload = function () {
         if (xhr.status === 200) {
-            
+            console.log("GOT BACK", xhr.response);
+            var ProductGrid = document.getElementsByClassName("ProductGrid")[0];
+            ProductGrid.innerHTML = xhr.response;
         }
         else {
             alert('Filter Products Request failed.  Returned status of ' + xhr.status);

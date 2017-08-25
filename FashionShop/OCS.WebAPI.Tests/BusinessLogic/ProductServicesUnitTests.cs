@@ -132,7 +132,7 @@ namespace OCS.WebAPI.Tests.BusinessLogic
             Category categ = new Category { CategoryID = categID, CategoryName = model.Category };
 
             categRepo.Setup(x => x.GetCategoryByName(model.Category)).Returns(categ);
-            repo.Setup(x => x.SaveProduct(It.Is<Product>(prod => prod.Category.CategoryID==categ.CategoryID)));
+            repo.Setup(x => x.SaveProduct(It.Is<Product>(prod => prod.Category.CategoryID == categ.CategoryID)));
 
             //Act
             service.AddProduct(model);
@@ -162,268 +162,41 @@ namespace OCS.WebAPI.Tests.BusinessLogic
             repo.Verify(x => x.SaveProduct(It.IsAny<Product>()), Times.Once);
         }
 
-        [Test]
-        public void SearchProduct_CallsDbToGetAllProducts()
-        {
-            //Arrange
-            repo.Setup(x => x.GetAllProducts()).Returns(new List<Product>());
-
-            //Act
-            var result = service.SearchProduct("");
-
-            //Assert
-            repo.Verify(x => x.GetAllProducts(), Times.Once);
-        }
-
-        [Test]
-        public void SearchProduct_ReturnsCorrectProducts()
-        {
-            //Arrange
-            string searchText = "this";
-            
-            List<Product> goodProds = new List<Product>()
-            {
-                GetProduct("NameThis2", 2, "TestBrand2", "TestCateg2", Gender.Male),
-                GetProduct("NameThis3", 3, "TestBrand3", "TestCateg3", Gender.Female),
-                GetProduct("This", 4, "TestBrand4", "TestCateg4", Gender.Female),
-            };
-            List<Product> prods = new List<Product>()
-            {
-                GetProduct("Name1", 1, "TestBrand1", "TestCateg1", Gender.Male),
-                goodProds[0],
-                goodProds[1],
-                goodProds[2],
-                GetProduct("Name5", 5, "TestBrand5", "TestCateg5", Gender.Unisex)
-            };
-            IEnumerable<ProductModel> goodResult = new List<ProductModel>()
-            {
-                GetProductModel(goodProds[0]),
-                GetProductModel(goodProds[1]),
-                GetProductModel(goodProds[2])
-            };
-
-            repo.Setup(x => x.GetAllProducts()).Returns(prods);
-
-            //Act
-            var result = service.SearchProduct(searchText);
-
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Count() == 3);
-            Assert.IsTrue(AreEqual(result.ElementAt(0), goodResult.ElementAt(0)));
-            Assert.IsTrue(AreEqual(result.ElementAt(1), goodResult.ElementAt(1)));
-            Assert.IsTrue(AreEqual(result.ElementAt(2), goodResult.ElementAt(2)));
-
-        }
-        [Test]
-        public void SearchProduct_ReturnsEmptyListOnNoMatch()
-        {
-            //Arrange
-            string searchText = "this";
-
-            List<Product> prods = new List<Product>()
-            {
-                GetProduct("Name1", 1, "TestBrand1", "TestCateg1", Gender.Male),
-                GetProduct("Name2", 2, "TestBrand2", "TestCateg2", Gender.Male),
-                GetProduct("Name3", 3, "TestBrand3", "TestCateg3", Gender.Female),
-                GetProduct("Name4", 4, "TestBrand4", "TestCateg4", Gender.Female),
-                GetProduct("Name5", 5, "TestBrand5", "TestCateg5", Gender.Unisex)
-            };
-
-            repo.Setup(x => x.GetAllProducts()).Returns(prods);
-
-            //Act
-            var result = service.SearchProduct(searchText);
-
-            //Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Count() == 0);
-        }
-        [Test]
-        public void FilterByCategory_FiltersCorrectly()
-        {
-            //Arrange
-            var categ = new Category() { CategoryName = "GoodCateg" };
-
-            List<Product> goodProds = new List<Product>()
-            {
-                GetProduct("Name2", 2, "TestBrand2", "GoodCateg", Gender.Male),
-                GetProduct("Name3", 3, "TestBrand3", "GoodCateg", Gender.Female),
-            };
-            List<Product> prods = new List<Product>()
-            {
-                GetProduct("Name1", 1, "TestBrand1", "TestCateg1", Gender.Male),
-                goodProds[0],
-                goodProds[1],
-                GetProduct("Name4", 4, "TestBrand4", "TestCateg4", Gender.Female),
-                GetProduct("Name5", 5, "TestBrand5", "TestCateg5", Gender.Unisex)
-            };
-
-            //Act
-            var results = service.FilterByCategory(categ, prods);
-
-            //Assert
-            Assert.IsNotNull(results);
-            Assert.IsNotEmpty(results);
-            Assert.IsTrue(results.Count() == 2);
-            Assert.IsTrue(AreEqual(results.ElementAt(0), goodProds[0]));
-            Assert.IsTrue(AreEqual(results.ElementAt(1), goodProds[1]));
-        }
-        [Test]
-        public void FilterByBrand_FiltersCorrectly()
-        {
-            //Arrange
-            var brand = new Brand() { BrandName = "GoodBrand" };
-
-            List<Product> goodProds = new List<Product>()
-            {
-                GetProduct("Name2", 2, "GoodBrand", "TestCateg3", Gender.Male),
-                GetProduct("Name3", 3, "GoodBrand", "TestCateg2", Gender.Female),
-                GetProduct("Name5", 5, "GoodBrand", "TestCateg5", Gender.Unisex)
-            };
-            List<Product> prods = new List<Product>()
-            {
-                goodProds[0],
-                GetProduct("Name1", 1, "TestBrand1", "TestCateg1", Gender.Male),
-                goodProds[1],
-                GetProduct("Name4", 4, "TestBrand4", "TestCateg4", Gender.Female),
-                goodProds[2]
-            };
-
-            //Act
-            var results = service.FilterByBrand(brand, prods);
-
-            //Assert
-            Assert.IsNotNull(results);
-            Assert.IsNotEmpty(results);
-            Assert.IsTrue(results.Count() == 3);
-            Assert.IsTrue(AreEqual(results.ElementAt(0), goodProds[0]));
-            Assert.IsTrue(AreEqual(results.ElementAt(1), goodProds[1]));
-            Assert.IsTrue(AreEqual(results.ElementAt(2), goodProds[2]));
-        }
-
-        [Test]
-        public void Filter_ValidatesFilters()
-        {
-            //Arrange
-            string[] categs = new string[2]
-            {
-                "categ1",
-                "categ2"
-            };
-            string[] brands = new string[3]
-            {
-                "brand1",
-                "brand2",
-                "brand3"
-            };
-
-            List<Product> prods = new List<Product>()
-            {
-                GetProduct("Name1", 1, "TestBrand1", "TestCateg1", Gender.Male),
-                GetProduct("Name2", 2, "TestBrand2", "TestCateg2", Gender.Male),
-                GetProduct("Name3", 3, "TestBrand3", "TestCateg3", Gender.Female),
-                GetProduct("Name4", 4, "TestBrand4", "TestCateg4", Gender.Female),
-                GetProduct("Name5", 5, "TestBrand5", "TestCateg5", Gender.Unisex)
-            };
-            
-            repo.Setup(x => x.GetAllProducts()).Returns(prods);
-            foreach(string filter in categs)
-            {
-                categRepo.Setup(x => x.GetCategoryByName(filter)).Returns(new Category() { CategoryName = filter });
-            }
-            foreach (string filter in brands)
-            {
-                brandRepo.Setup(x => x.GetBrandByName(filter)).Returns(new Brand() { BrandName = filter });
-            }
-
-            //Act
-            var result = service.Filter(categs, brands);
-
-            //Assert
-            categRepo.Verify(x => x.GetCategoryByName(categs[0]), Times.Once);
-            categRepo.Verify(x => x.GetCategoryByName(categs[1]), Times.Once);
-            brandRepo.Verify(x => x.GetBrandByName(brands[0]), Times.Once);
-            brandRepo.Verify(x => x.GetBrandByName(brands[1]), Times.Once);
-            brandRepo.Verify(x => x.GetBrandByName(brands[2]), Times.Once);
-        }
-        [Test]
-        public void Filter_ReturnsCorrectResults()
-        {
-            //Arrange
-            string[] categs = new string[2]
-            {
-                "GoodCateg1",
-                "GoodCateg2"
-            };
-            string[] brands = new string[3]
-            {
-                "GoodBrand1",
-                "GoodBrand2",
-                "GoodBrand3"
-            };
-
-            List<Product> prods = new List<Product>()
-            {
-                GetProduct("Name1", 1, "GoodBrand1", "TestCateg1", Gender.Male),
-                GetProduct("Name2", 2, "TestBrand2", "GoodCateg1", Gender.Male),    
-                GetProduct("Name3", 3, "GoodBrand3", "GoodCateg2", Gender.Female),  //valid
-                GetProduct("Name4", 4, "GoodBrand2", "TestCateg4", Gender.Female),
-                GetProduct("Name5", 5, "TestBrand5", "TestCateg5", Gender.Unisex)
-            };
-
-            repo.Setup(x => x.GetAllProducts()).Returns(prods);
-            foreach (string filter in categs)
-            {
-                categRepo.Setup(x => x.GetCategoryByName(filter)).Returns(new Category() { CategoryName = filter });
-            }
-            foreach (string filter in brands)
-            {
-                brandRepo.Setup(x => x.GetBrandByName(filter)).Returns(new Brand() { BrandName = filter });
-            }
-
-            //Act
-            var results=service.Filter(categs, brands);
-
-            //Assert
-            Assert.IsNotNull(results);
-            Assert.IsNotEmpty(results);
-            Assert.IsTrue(results.Count() == 1);
-            Assert.IsTrue(AreEqual(results.ElementAt(0), GetProductModel(prods[2])));
-        }
+        
         [Test]
         public void FilteredSearch_ReturnsValidResuls()
         {
             //Arrange
             string searchText = "this";
-            string[] categs = new string[2]
+            List<CategoryModel> categs = new List<CategoryModel>()
             {
-                "GoodCateg1",
-                "GoodCateg2"
+                new CategoryModel(){Name="GoodCateg1" },
+                new CategoryModel(){Name="GoodCateg2" }
             };
-            string[] brands = new string[3]
+            List<BrandModel> brands = new List<BrandModel>()
             {
-                "GoodBrand1",
-                "GoodBrand2",
-                "GoodBrand3"
+                new BrandModel(){Name="GoodBrand1" },
+                new BrandModel(){Name="GoodBrand2"},
+                new BrandModel(){Name="GoodBrand3"}
             };
 
             List<Product> prods = new List<Product>()
             {
                 GetProduct("this2", 2, "TestBrand2", "GoodCateg2", Gender.Male),
                 GetProduct("this1", 1, "GoodBrand1", "GoodCateg1", Gender.Male),    //Valid
-                GetProduct("Name3", 3, "GoodBrand3", "GoodCateg2", Gender.Female), 
+                GetProduct("Name3", 3, "GoodBrand3", "GoodCateg2", Gender.Female),
                 GetProduct("this4", 4, "GoodBrand2", "TestCateg4", Gender.Female),
-                GetProduct("Name5", 5, "TestBrand5", "TestCateg5", Gender.Unisex)
+                GetProduct("Name5", 5, "TestBrand5", "TestCateg5", Gender.Unisex),
+                GetProduct("3this", 5, "GoodBrand2", "GoodCateg2", Gender.Unisex)   //Valid
             };
             repo.Setup(x => x.GetAllProducts()).Returns(prods);
-            foreach (string filter in categs)
+            foreach (CategoryModel filter in categs)
             {
-                categRepo.Setup(x => x.GetCategoryByName(filter)).Returns(new Category() { CategoryName = filter });
+                categRepo.Setup(x => x.GetCategoryByName(filter.Name)).Returns(new Category() { CategoryName = filter.Name });
             }
-            foreach (string filter in brands)
+            foreach (BrandModel filter in brands)
             {
-                brandRepo.Setup(x => x.GetBrandByName(filter)).Returns(new Brand() { BrandName = filter });
+                brandRepo.Setup(x => x.GetBrandByName(filter.Name)).Returns(new Brand() { BrandName = filter.Name });
             }
 
             //Act
@@ -432,8 +205,9 @@ namespace OCS.WebAPI.Tests.BusinessLogic
             //Assert
             Assert.IsNotNull(result);
             Assert.IsNotEmpty(result);
-            Assert.IsTrue(result.Count() == 1);
+            Assert.IsTrue(result.Count() == 2);
             Assert.IsTrue(AreEqual(result.ElementAt(0), GetProductModel(prods[1])));
+            Assert.IsTrue(AreEqual(result.ElementAt(1), GetProductModel(prods[5])));
         }
 
         #region helpers

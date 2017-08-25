@@ -13,12 +13,7 @@ namespace OCS.BusinessLayer.Services
 
         void AddProduct(ProductModel productModel);
 
-        IEnumerable<ProductModel> SearchProduct(string searchString);
-
-        IEnumerable<ProductModel> Filter(string[] category, string[] brand);
-
-        IEnumerable<ProductModel> FilteredSearch(string searchString, string[] category = null, string[] brand = null);
-
+        IEnumerable<ProductModel> FilteredSearch(string searchString, IEnumerable<CategoryModel> categories = null, IEnumerable<BrandModel> brands = null);
 
     }
 }

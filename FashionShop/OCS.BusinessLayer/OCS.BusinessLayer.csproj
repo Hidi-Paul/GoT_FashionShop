@@ -57,6 +57,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BrandServices.cs" />
     <Compile Include="Services\CategoryServices.cs" />
+    <Compile Include="Services\Filters\AbstractFilter.cs" />
+    <Compile Include="Services\Filters\BrandFilter.cs" />
+    <Compile Include="Services\Filters\CategoryFilter.cs" />
+    <Compile Include="Services\Filters\FilterResult.cs" />
+    <Compile Include="Services\Filters\NameSearchStringFilter.cs" />
     <Compile Include="Services\IBrandServices.cs" />
     <Compile Include="Services\ICategoryServices.cs" />
     <Compile Include="Services\IProductServices.cs" />

@@ -30,15 +30,16 @@ namespace OCS.MVC.Controllers
         {
             Token = token;
         }
-        
-        public static async Task<HttpResponseMessage> GetAsync(string url, string param="")
+
+        public static async Task<HttpResponseMessage> GetAsync(string url, string urlParam = "")
         {
             HttpClient client = GetClient();
-            var urlParam = Uri.UnescapeDataString(param);
-            var response = await client.GetAsync( $"{ServerAddr}{url}{urlParam}");
+
+            var response = (urlParam.Length > 0) ? await client.GetAsync($"{ServerAddr}{url}?urlParams={urlParam}") :
+                                                   await client.GetAsync($"{ServerAddr}{url}");
             return response;
         }
-        
+
         public static async Task<HttpResponseMessage> PostAsync(string url)
         {
             //!HERE!
@@ -46,5 +47,5 @@ namespace OCS.MVC.Controllers
         }
     }
 
-    
+
 }
