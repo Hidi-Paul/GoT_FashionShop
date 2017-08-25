@@ -283,6 +283,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BrandViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Models\CreateProductViewModel.cs" />
     <Compile Include="Models\FiltersViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -364,6 +365,7 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\FiltersPartial.cshtml" />
     <Content Include="Views\Product\ProductListPartial.cshtml" />
+    <Content Include="Views\Product\AddProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

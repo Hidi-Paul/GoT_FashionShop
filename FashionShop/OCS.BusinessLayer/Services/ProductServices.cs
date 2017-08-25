@@ -49,13 +49,11 @@ namespace OCS.BusinessLayer.Services
             if (brand != null)
             {
                 mappedProduct.BrandID = brand.BrandID;
-                mappedProduct.Brand = brand;
             }
             var categ = categoryRepository.GetCategoryByName(productModel.Category);
             if (categ != null)
             {
                 mappedProduct.CategoryID = categ.CategoryID;
-                mappedProduct.Category = categ;
             }
 
             repository.SaveProduct(mappedProduct);

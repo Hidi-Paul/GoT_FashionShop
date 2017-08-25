@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace OCS.MVC.Controllers
@@ -40,10 +42,14 @@ namespace OCS.MVC.Controllers
             return response;
         }
 
-        public static async Task<HttpResponseMessage> PostAsync(string url)
+        public static async Task<HttpResponseMessage> PostAsync(string url, Object data)
         {
-            //!HERE!
-            return null;
+            HttpClient client = GetClient();
+            var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync($"{ServerAddr}{url}", content);
+
+            return response;
         }
     }
 

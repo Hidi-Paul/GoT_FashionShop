@@ -14,13 +14,13 @@ namespace OCS.BusinessLayer.Services.Filters
         public NameSearchStringFilter(IEnumerable<Product> source, string name, AbstractFilter otherFilter = null) 
             : base(source, otherFilter)
         {
-            this.Name = name;
+            this.Name = name.ToUpper();
         }
 
         public override FilterResult Resolve()
         {
             FilterResult results = (Filter != null) ? Filter.Resolve() : new FilterResult();
-            var filtered = Source.Where(prod => prod.ProductName.Contains(Name)).ToList();
+            var filtered = Source.Where(prod => prod.ProductName.ToUpper().Contains(Name)).ToList();
 
             results.AddFilter("Name", filtered);
             return results;

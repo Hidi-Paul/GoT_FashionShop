@@ -7,13 +7,15 @@ using System.Net.Http;
 using System.Web.Http;
 using Newtonsoft.Json;
 using System.Text;
+using System.Linq;
 
 namespace OCS.MVC.Controllers
 {
     [Authorize]
     public class ProductController : Controller
     {
-        // GET: Product
+        // GET: All Products
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             var token = HttpContext.Request.Cookies["Token"].Value;
@@ -38,33 +40,61 @@ namespace OCS.MVC.Controllers
             return View(productsPageViewModel);
         }
 
-        // POST: Filtered Results
+        // POST: Product Filters
         [HttpPost]
         public async Task<ActionResult> ProductListPartial(FiltersViewModel model)
         {
             var token = HttpContext.Request.Cookies["Token"].Value;
             HttpRequestHelper.SetAuthToken(token);
 
-            var param = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
-            var paramValue = param.ReadAsStringAsync().Result;
-            HttpResponseMessage response = await HttpRequestHelper.GetAsync("Filter",paramValue);
-
-            List<ProductViewModel> products = new List<ProductViewModel>();
-            if (response.IsSuccessStatusCode)
-            {
-                products = await response.Content.ReadAsAsync<List<ProductViewModel>>();
-            }
-            else
-            {
-                throw new ApplicationException(response.Content.ToString());
-            }
+            var products = await GetFilteredProducts(model);
 
             return PartialView("ProductListPartial", products);
         }
-        
+
+        // GET: New Product Creation Form
+        [HttpGet]
+        public async Task<ActionResult> AddProduct()
+        {
+            var brands = await GetBrands();
+            var categs = await GetCategories();
+
+            var brandNames = brands.Select(b => b.Name);
+            var categNames = categs.Select(c => c.Name);
+            
+
+            ViewData["Brands"] = new SelectList(brandNames);
+            ViewData["Categories"] = new SelectList(categNames);
+
+            var model = new CreateProductViewModel();
+            return View(model);
+        }
+
+        // POST: Add New Product
+        [HttpPost]
+        public async Task<ActionResult> AddProduct(CreateProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var brands = await GetBrands();
+                var categs = await GetCategories();
+
+                var brandNames = brands.Select(b => b.Name);
+                var categNames = categs.Select(c => c.Name);
+
+                ViewData["Brands"] = new SelectList(brandNames);
+                ViewData["Categories"] = new SelectList(categNames);
+
+                return View(model);
+            }
+
+            var response=await PostProduct(model);
+
+            return RedirectToAction("Index");
+        }
 
         #region HttpClientCallers
-        public async Task<IEnumerable<ProductViewModel>> GetProducts()
+        private async Task<IEnumerable<ProductViewModel>> GetProducts()
         {
             HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllProducts");
             List<ProductViewModel> products = new List<ProductViewModel>();
@@ -78,7 +108,7 @@ namespace OCS.MVC.Controllers
             }
             return products;
         }
-        public async Task<IEnumerable<CategoryViewModel>> GetCategories()
+        private async Task<IEnumerable<CategoryViewModel>> GetCategories()
         {
             HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllCategories");
             List<CategoryViewModel> categories = new List<CategoryViewModel>();
@@ -92,7 +122,7 @@ namespace OCS.MVC.Controllers
             }
             return categories;
         }
-        public async Task<IEnumerable<BrandViewModel>> GetBrands()
+        private async Task<IEnumerable<BrandViewModel>> GetBrands()
         {
             HttpResponseMessage response = await HttpRequestHelper.GetAsync("GetAllBrands");
             List<BrandViewModel> brands = new List<BrandViewModel>();
@@ -106,110 +136,29 @@ namespace OCS.MVC.Controllers
             }
             return brands;
         }
+        private async Task<IEnumerable<ProductViewModel>> GetFilteredProducts(FiltersViewModel model)
+        {
+            var param = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            var paramValue = param.ReadAsStringAsync().Result;
+            HttpResponseMessage response = await HttpRequestHelper.GetAsync("Filter", paramValue);
+
+            List<ProductViewModel> products = new List<ProductViewModel>();
+            if (response.IsSuccessStatusCode)
+            {
+                products = await response.Content.ReadAsAsync<List<ProductViewModel>>();
+            }
+            else
+            {
+                throw new ApplicationException(response.Content.ToString());
+            }
+            return products;
+        }
+        private async Task<string> PostProduct(CreateProductViewModel model)
+        {
+            HttpResponseMessage response = await HttpRequestHelper.PostAsync("PostProduct", model);
+
+            return await response.Content.ReadAsStringAsync();
+        }
         #endregion HttpClientCallers
-        //// GET: Product/Details/5
-        //public ActionResult Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    ProductModel productModel = db.ProductModels.Find(id);
-        //    if (productModel == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(productModel);
-        //}
-
-        //// GET: Product/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: Product/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "ProductID,ProductName,ProductPrice,Gender,Color,Brand,Category")] ProductModel productModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        productModel.ProductID = Guid.NewGuid();
-        //        db.ProductModels.Add(productModel);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(productModel);
-        //}
-
-        //// GET: Product/Edit/5
-        //public ActionResult Edit(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    ProductModel productModel = db.ProductModels.Find(id);
-        //    if (productModel == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(productModel);
-        //}
-
-        //// POST: Product/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "ProductID,ProductName,ProductPrice,Gender,Color,Brand,Category")] ProductModel productModel)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(productModel).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View(productModel);
-        //}
-
-        //// GET: Product/Delete/5
-        //public ActionResult Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    ProductModel productModel = db.ProductModels.Find(id);
-        //    if (productModel == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(productModel);
-        //}
-
-        //// POST: Product/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(Guid id)
-        //{
-        //    ProductModel productModel = db.ProductModels.Find(id);
-        //    db.ProductModels.Remove(productModel);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
     }
 }
