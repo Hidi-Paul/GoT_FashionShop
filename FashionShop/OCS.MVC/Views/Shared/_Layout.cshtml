@@ -34,7 +34,11 @@
     <div class="container body-content">
         @RenderBody()
     </div>
-
+    <script>
+        var Globals = {
+            ServerAddr:'@System.Configuration.ConfigurationManager.AppSettings["base-url"]'
+        }
+    </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/site")

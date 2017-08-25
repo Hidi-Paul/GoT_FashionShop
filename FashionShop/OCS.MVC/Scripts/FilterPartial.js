@@ -85,7 +85,6 @@ function RefreshProducts() {
     FilterProducts(searchBar.value, CategoryFilters, BrandFilters);
 };
 
-var baseUrl = "https://localhost:44358/"
 function FilterProducts(searchText, categories, brands) {
     var xhr = new XMLHttpRequest();
     
@@ -110,7 +109,7 @@ function FilterProducts(searchText, categories, brands) {
     obj = JSON.stringify(obj);
     console.log("Param", obj)
 
-    xhr.open('POST', baseUrl + 'Product/ProductListPartial');
+    xhr.open('POST', Globals.ServerAddr + 'Product/ProductListPartial');
 
     xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
