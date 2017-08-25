@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - A Shop to Fashion</title>
+    <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/jquery-1.10.2.js"></script>
@@ -13,30 +13,22 @@
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Buy some", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <div class="navbar-header navbar-left">
+                @Html.ActionLink("Browse", "Index", "Product", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div class="navbar-header">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                   
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
                     @if (User.IsInRole("user") || User.IsInRole("admin"))
                     {
-                        <li>@Html.ActionLink("Products", "Index", "Product")</li>
+                        <li>@Html.ActionLink("Add Product", "AddProduct", "Product")</li>
                     }
-                    
-
                 </ul>
+            </div>
+
+            <div class="navbar-collapse collapse">
                 @Html.Partial("_LoginPartial")
             </div>
+            
         </div>
     </div>
     <div class="container body-content">

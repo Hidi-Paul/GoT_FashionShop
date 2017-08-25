@@ -1,8 +1,9 @@
 ﻿@model OCS.MVC.Models.FiltersViewModel
 
 <div class="col-md-2 storeLeftBar">
+    @*Search Bar*@
     <div class="searchContainer">
-        <input id="searchBar" type="text" value="@Model.SearchString" />
+        <input id="searchBar" class="form-control mr-sm-2" type="text" value="@Model.SearchString" placeholder="Search by Name"/>
     </div>
     <div class="panel-group">
         @*Categories*@
@@ -40,4 +41,4 @@
     </div>
 </div>
 
-@Scripts.Render("~/bundles/FilterPartial");
+@Scripts.Render("~/bundles/FilterPartial")

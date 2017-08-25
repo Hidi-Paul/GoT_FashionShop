@@ -118,7 +118,11 @@ textarea {
 
 .thing{
     background-color:pink;
-
     min-height:300px;
+}
 
+.navbar-center{
+    background-color:aliceblue;
+
+    width:auto;
 }
