@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Configuration;
 
 namespace OCS.MVC.Controllers
 {
@@ -28,13 +29,15 @@ namespace OCS.MVC.Controllers
         public string expires { get; set; }
     }
 
+
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        
+        private static string ServerAddr => ConfigurationManager.AppSettings["base-url"];
+
 
         public AccountController()
         {
@@ -69,8 +72,7 @@ namespace OCS.MVC.Controllers
                 _userManager = value;
             }
         }
-
-        //
+        
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -78,8 +80,7 @@ namespace OCS.MVC.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
-        //
+        
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -106,8 +107,8 @@ namespace OCS.MVC.Controllers
             {
                 case SignInStatus.Success:
                     {
-
-                        var accessString = GetToken("https://localhost:44384/", model.Email ,model.Password );
+                        //!HERE!
+                        var accessString = GetToken(ServerAddr, model.Email ,model.Password );
 
                         Token token = JsonConvert.DeserializeObject<Token>(accessString);
                         //!TOKEN!
@@ -131,10 +132,7 @@ namespace OCS.MVC.Controllers
                     return View(model);
             }
         }
-
-
-
-        //
+        
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
@@ -155,10 +153,22 @@ namespace OCS.MVC.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    var accessString = GetToken(ServerAddr, model.Email, model.Password);
 
-                    return View("Info");
-                    //return RedirectToAction("Index", "Home");
+                    Token token = JsonConvert.DeserializeObject<Token>(accessString);
+                    //!TOKEN!
+                    HttpCookie cookie = new HttpCookie("Token")
+                    {
+                        Expires = Convert.ToDateTime(token.expires),
+                        Value = token.access_token,
+                        HttpOnly = true,
+                        Secure = true
+                    };
+
+                    System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
+                    
+                    return RedirectToAction("Index", "Product");
                 }
                 var roleresult =await  UserManager.AddToRoleAsync(user.Id, "user");
                 AddErrors(result);
@@ -174,7 +184,7 @@ namespace OCS.MVC.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
         
         #region Helpers
