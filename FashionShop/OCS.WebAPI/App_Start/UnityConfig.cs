@@ -22,10 +22,12 @@ namespace OCS.WebAPI
             container.RegisterType<IProductServices, ProductServices>();
             container.RegisterType<ICategoryServices, CategoryServices>();
             container.RegisterType<IBrandServices, BrandServices>();
+            container.RegisterType<IShoppingCartServices, ShoppingCartServices>();
             //RegisterComponents();
 
             container.RegisterType<IBrandRepository, BrandRepository>();
             container.RegisterType<ICategoryRepository, CategoryRepository>();
+            container.RegisterType<IShoppingCartRepository, ShoppingCartRepository>();
 
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

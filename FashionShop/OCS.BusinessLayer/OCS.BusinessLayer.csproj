@@ -54,6 +54,8 @@
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Mapper\AutoMapperServicesConfig.cs" />
+    <Compile Include="Models\ShoppingCartItemModel.cs" />
+    <Compile Include="Models\ShoppingCartModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BrandServices.cs" />
     <Compile Include="Services\CategoryServices.cs" />
@@ -65,7 +67,9 @@
     <Compile Include="Services\IBrandServices.cs" />
     <Compile Include="Services\ICategoryServices.cs" />
     <Compile Include="Services\IProductServices.cs" />
+    <Compile Include="Services\IShoppingCartServices.cs" />
     <Compile Include="Services\ProductServices.cs" />
+    <Compile Include="Services\ShoppingCartServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OCS.DataAccess\OCS.DataAccess.csproj">

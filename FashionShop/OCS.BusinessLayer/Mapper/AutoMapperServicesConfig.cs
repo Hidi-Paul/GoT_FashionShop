@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using OCS.BusinessLayer.Models;
 using OCS.DataAccess;
+using OCS.DataAccess.DTO;
 using OCS.DataAccess.Repositories;
 using System;
 
@@ -30,6 +31,15 @@ namespace OCS.BusinessLayer.Mapping
                         .ForMember(cat => cat.Name, map => map.MapFrom(p => p.CategoryName));
                 cfg.CreateMap<Brand, BrandModel>()
                         .ForMember(bran => bran.Name, map => map.MapFrom(p => p.BrandName));
+
+                cfg.CreateMap<ShoppingCart, ShoppingCartModel>()
+                        .ForMember(shop => shop.ShoppingCartItems, map => map.MapFrom(p => p.ShoppingCartItems));
+                cfg.CreateMap<ShoppingCartItem, ShoppingCartItemModel>()
+                        .ForMember(item => item.Product, map => map.MapFrom(p => p.Product))
+                        .ForMember(item => item.Quantity, map => map.MapFrom(p => p.Quantity));
+                cfg.CreateMap<ShoppingCartItemModel, ShoppingCartItem>()
+                        .ForMember(item => item.Product, map => map.Ignore())
+                        .ForMember(item => item.Quantity, map => map.MapFrom(p => p.Quantity));
             });
 
         }        

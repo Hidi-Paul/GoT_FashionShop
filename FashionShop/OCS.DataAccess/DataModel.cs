@@ -4,6 +4,7 @@ namespace OCS.DataAccess
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using OCS.DataAccess.DTO;
 
     public partial class DataModel : DbContext
     {
@@ -15,6 +16,9 @@ namespace OCS.DataAccess
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+
+        public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public virtual DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

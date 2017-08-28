@@ -53,6 +53,8 @@
     <Compile Include="DTO\Category.cs" />
     <Compile Include="DataModel.cs" />
     <Compile Include="DTO\Product.cs" />
+    <Compile Include="DTO\ShoppingCart.cs" />
+    <Compile Include="DTO\ShoppingCartItem.cs" />
     <Compile Include="Enums\Gender.cs" />
     <Compile Include="Migrations\201708231041408_01-Initial.cs" />
     <Compile Include="Migrations\201708231041408_01-Initial.Designer.cs">
@@ -65,7 +67,9 @@
     <Compile Include="Repositories\IBrandRepository.cs" />
     <Compile Include="Repositories\ICategoryRepository.cs" />
     <Compile Include="Repositories\IProductRepository.cs" />
+    <Compile Include="Repositories\IShoppingCartRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\ShoppingCartRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
