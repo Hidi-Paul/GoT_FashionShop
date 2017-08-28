@@ -9,7 +9,7 @@ namespace OCS.DataAccess.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(OCS.DataAccess.DataModel context)

@@ -1,9 +1,6 @@
 ﻿using OCS.DataAccess;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OCS.BusinessLayer.Services.Filters
 {
@@ -15,6 +12,7 @@ namespace OCS.BusinessLayer.Services.Filters
         {
             Filters = new Dictionary<string, IEnumerable<Product>>();
         }
+
         public void AddFilter(string key, IEnumerable<Product> values)
         {
             if (Filters.ContainsKey(key))
@@ -29,13 +27,18 @@ namespace OCS.BusinessLayer.Services.Filters
 
         public IEnumerable<Product> Result()
         {
-            IEnumerable<Product> Final = Filters.ElementAt(0).Value;
-            for(int i = 1; i < Filters.Count; i++)
+            if (Filters == null || Filters.Count == 0)
             {
-                Final = Final.Intersect(Filters.ElementAt(i).Value);
+                return new List<Product>();
             }
 
-            return Final;
+            IEnumerable<Product> final = Filters.ElementAt(0).Value;
+            for(int i = 1; i < Filters.Count; i++)
+            {
+                final = final.Intersect(Filters.ElementAt(i).Value);
+            }
+
+            return final;
         }
     }
 }

@@ -22,13 +22,9 @@ namespace OCS.DataAccess
         
         public Gender Gender { get; set; }
 
-        public Guid? BrandID { get; set; }
+        public Brand Brand { get; set; }
 
-        public Guid? CategoryID { get; set; }
-
-        public virtual Brand Brand { get; set; }
-
-        public virtual Category Category { get; set; }
+        public Category Category { get; set; }
 
         [Required]
         public string Image { get; set; }
